@@ -39,7 +39,7 @@ export default function ImeiLookup() {
       };
 
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBMBmIUqt8FRnWsa0vavEkYsexD0awwAEE`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=apikey`,
         payload
       );
 
