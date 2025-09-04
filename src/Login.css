@@ -1,0 +1,87 @@
+.flip-card {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  margin: 0 auto; /* center it horizontally */
+}
+
+.flip-card-front,
+.flip-card-back {
+  width: 100%;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease-in-out;
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 1rem;
+  color: white;
+  padding-top: 1.5rem !important; /* reduce extra space at the top */
+}
+
+.flip-card-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+.flip-card.flipped .flip-card-front {
+  transform: rotateY(-180deg);
+}
+
+.flip-card.flipped .flip-card-back {
+  transform: rotateY(0deg);
+}
+
+.social-btn {
+  background-color: rgba(30, 30, 30, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  color: lightgray !important;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  background-color: #1f1f1f !important;
+}
+
+/* ✅ Fix placeholder color */
+.form-control::placeholder {
+  color: rgba(200, 200, 200, 0.7) !important;
+  opacity: 1 !important; /* ensure consistent color */
+}
+/* Remove extra top margin inside the card */
+.flip-card-front,
+.flip-card-back {
+  margin-top: 0 !important;
+  padding-top: 1.5rem !important; /* smaller top padding */
+}
+
+/* Adjust placeholder color */
+.form-control::placeholder {
+  color: rgba(200, 200, 200, 0.7) !important;
+  opacity: 1 !important;
+}
+/* Ensure flip card always matches tallest side */
+.flip-card {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  margin: 0 auto;
+  height: 600px; /* lock height (adjust as needed) */
+}
+
+/* Make both sides fill container */
+.flip-card-front,
+.flip-card-back {
+  height: 100%;
+  overflow-y: auto; /* allow inner scroll if content exceeds */
+}

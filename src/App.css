@@ -1,38 +1,248 @@
-.App {
-  text-align: center;
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: black;
+  color: #ffffff;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.homepage {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 100%;
+  background-color: black;
+}
+
+.navbar {
+  background-color: black !important;
+}
+
+.nav-link {
+  color: #ccc !important;
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  color: #00ff88 !important;
+}
+
+.hero-img {
+  max-width: 300px;
+  filter: drop-shadow(0 0 10px #00ff88);
+}
+
+
+.aboutus-section {
+  background-color: black;
+  color: white;
+  min-height: 100vh;
+}
+
+.aboutus-section h2 {
+  font-size: 2.5rem;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.member-card {
+  border: 1px solid #00ff88;
+  border-radius: 12px;
+  background: black;
+  transition: 0.3s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.member-card:hover {
+  box-shadow: 0 0 15px #00ff88;
+}
+
+.member-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #00ff88;
+  object-fit: cover;
+}
+
+.github-handle {
+  color: #00ff88;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.role {
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.services-section {
+  background-color: #000;
+  color: #fff;
+  padding: 60px 20px;
+  min-height: 100vh;
+}
+
+.services-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.services-subtitle {
+  color: #00ff80;
+  font-size: 1.2rem;
+}
+
+.service-icon {
+  font-size: 60px;
+  color: #00ff80;
+  margin-bottom: 20px;
+}
+
+.service-heading {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.service-text {
+  color: #00ff80;
+  font-size: 1rem;
+}
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.text-neon {
+  color: #00ff00;
+  text-shadow: 0 0 8px #00ff00, 0 0 16px #00ff00;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: transparent;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #888;
+}
+
+.contact-page{
+  background: black;
+  height: 100vh;
+}
+.btn-outline-neon {
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-weight: bold;
+}
+
+.btn-outline-neon:hover {
+  background-color: #00ff00;
+  color: black;
+}
+.btn-black{
+  border: 1px solid green;
+}
+
+/* .grid-bg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  background-image: linear-gradient(#00ff00 1px, transparent 1px),
+                    linear-gradient(90deg, #00ff00 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.2;
+} */
+.aboutus-section {
+  background: #0a0a0a; /* Dark theme */
+}
+
+.member-card {
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.member-card:hover {
+  box-shadow: 0px 8px 20px rgba(0, 255, 128, 0.3);
+}
+
+.member-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+.glass-card {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+/* Neon Glow Text */
+.text-neon {
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #00ff88;
+  text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
+}
+
+/* Glass Effect */
+.glass-card {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease-in-out;
+}
+.glass-card:hover {
+  border-color: #00ff88;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+/* Neon Button */
+.btn-neon {
+  background: #000;
+  color: #00ff88;
+  border: 2px solid #00ff88;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+.btn-neon:hover {
+  background: #00ff88;
+  color: #000;
+  box-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88;
+}
+
+/* Inputs */
+.contact-form .form-control {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px;
+}
+.contact-form .form-control:focus {
+  border-color: #00ff88;
+  outline: none;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+/* Futuristic Grid Background */
+.grid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#0f0f0f 1px, transparent 1px),
+    linear-gradient(90deg, #0f0f0f 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.2;
+  z-index: -1;
 }

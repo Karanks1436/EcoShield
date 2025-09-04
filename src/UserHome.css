@@ -1,0 +1,121 @@
+/* ==========================
+   UserHome.css (Minimal Sleek)
+   ========================== */
+.userhome-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background: #000; /* Solid black base */
+  color: #cceede;   /* Muted green-white text */
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.8s ease-in;
+  overflow-x: hidden;
+}
+
+/* --------------------------
+   Hero Section
+--------------------------- */
+.hero-section {
+  width: 100%;
+  padding: 90px 20px 70px;
+  text-align: center;
+  background: #0d0d0d; /* Dark grey-black */
+  border-bottom: 1px solid #003d1f;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #00cc66; /* Calm green */
+  margin-bottom: 15px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #80ffbf;
+  margin-top: 8px;
+}
+
+.hero-email {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #00aa55;
+  background: #001a0d;
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #004d26;
+}
+
+/* --------------------------
+   Info Sections
+--------------------------- */
+.info-section {
+  width: 100%;
+  padding: 60px 10%;
+  border-bottom: 1px solid #1a3324;
+  background: #050505;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.info-section:hover {
+  background: #0a0a0a;
+  transform: translateY(-2px);
+}
+
+.info-section h2 {
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: #00cc66;
+  margin-bottom: 12px;
+}
+
+.info-section p,
+.info-section ul,
+.info-section ol {
+  color: #cceede;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.info-section ul,
+.info-section ol {
+  padding-left: 22px;
+}
+
+.info-section li {
+  margin-bottom: 8px;
+}
+
+/* --------------------------
+   CTA Footer
+--------------------------- */
+.cta-section {
+  padding: 70px 12%;
+  text-align: center;
+  background: #0d0d0d;
+  border-top: 1px solid #003d1f;
+}
+
+.cta-section h2 {
+  font-size: 1.9rem;
+  color: #00cc66;
+  margin-bottom: 18px;
+}
+
+.cta-section p {
+  font-size: 1.05rem;
+  color: #b3d9c6;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* --------------------------
+   Animations
+--------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
