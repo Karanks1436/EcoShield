@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ for navigation
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 
@@ -16,9 +16,9 @@ export default function LoginSignupCard() {
     dob: "",
   });
 
-  const navigate = useNavigate(); // ✅ navigation hook
+  const navigate = useNavigate();
 
-  // Handle signup
+  // ✅ Handle signup
   const handleSignup = (e) => {
     e.preventDefault();
 
@@ -27,55 +27,70 @@ export default function LoginSignupCard() {
       return;
     }
 
-    // Save user to localStorage
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        name: signupData.name,
-        contact: signupData.contact,
-        email: signupData.email,
-        password: signupData.password,
-        dob: signupData.dob,
-      })
-    );
+    // Get existing users
+    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Check duplicate email
+    if (existingUsers.some((u) => u.email === signupData.email)) {
+      alert("User already exists with this email!");
+      return;
+    }
+
+    const newUser = {
+      name: signupData.name,
+      contact: signupData.contact,
+      email: signupData.email,
+      password: signupData.password,
+      dob: signupData.dob,
+      status: "Active",
+    };
+
+    // Save new user in array
+    existingUsers.push(newUser);
+    localStorage.setItem("users", JSON.stringify(existingUsers));
 
     alert("Signup successful! You can login now.");
     setIsFlipped(false);
   };
 
-  // Handle login
+  // ✅ Handle login
   const handleLogin = () => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const foundUser = users.find(
+      (u) => u.email === loginEmail && u.password === loginPassword
+    );
 
-    if (!storedUser) {
-      alert("No account found. Please sign up first.");
+    if (!foundUser) {
+      alert("Invalid credentials or user not found!");
       return;
     }
 
-    if (
-      loginEmail === storedUser.email &&
-      loginPassword === storedUser.password
-    ) {
-      alert(`Welcome back, ${storedUser.name}! 🎉`);
+    // Save current session user
+    localStorage.setItem("user", JSON.stringify(foundUser));
 
-      // ✅ Redirect logic
-      if (loginEmail === "hackeradmin@gmail.com") {
-        navigate("/admindash"); // Admin
-      } else {
-        navigate("/userhome"); // Regular user
-      }
+    // Save to loggedInUsers list (for admin view)
+    const loggedInUsers = JSON.parse(localStorage.getItem("loggedInUsers")) || [];
+    if (!loggedInUsers.some((u) => u.email === foundUser.email)) {
+      loggedInUsers.push(foundUser);
+      localStorage.setItem("loggedInUsers", JSON.stringify(loggedInUsers));
+    }
+
+    alert(`Welcome back, ${foundUser.name}! 🎉`);
+
+    // Redirect based on role
+    if (foundUser.email === "hackeradmin@gmail.com") {
+      navigate("/admindash"); // Admin
     } else {
-      alert("Invalid credentials!");
+      navigate("/userhome"); // Regular user
     }
   };
 
   return (
     <div className="d-flex align-items-center justify-content-center min-vh-100 bg-black position-relative overflow-hidden">
-      {/* Background Glow */}
       <div className="bg-glow"></div>
 
       <div className={`flip-card ${isFlipped ? "flipped" : ""}`}>
-        {/* Front Side - Login */}
+        {/* 🔑 Front Side - Login */}
         <div className="flip-card-front glass-card p-4 p-md-5 rounded-4 shadow-lg mx-3">
           <h2 className="text-white fw-bold text-center">Welcome Back</h2>
           <p className="text-secondary text-center small mb-4">
@@ -105,27 +120,6 @@ export default function LoginSignupCard() {
             Login
           </button>
 
-          {/* Social buttons */}
-          <button className="btn w-100 d-flex align-items-center justify-content-center gap-2 mt-3 social-btn">
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="google"
-              width="18"
-              height="18"
-            />
-            Continue with Google
-          </button>
-
-          <button className="btn w-100 d-flex align-items-center justify-content-center gap-2 social-btn mt-2">
-            <img
-              src="https://www.svgrepo.com/show/475689/twitter-color.svg"
-              alt="x"
-              width="18"
-              height="18"
-            />
-            Continue with X
-          </button>
-
           <p className="text-center text-secondary small mt-4">
             Don’t have an account?{" "}
             <button
@@ -137,11 +131,9 @@ export default function LoginSignupCard() {
           </p>
         </div>
 
-        {/* Back Side - Signup */}
+        {/* 📝 Back Side - Signup */}
         <div className="flip-card-back glass-card p-4 p-md-5 rounded-4 shadow-lg mx-3">
-          <h2 className="text-white fw-bold mb-2 text-center">
-            Create Account
-          </h2>
+          <h2 className="text-white fw-bold mb-2 text-center">Create Account</h2>
           <p className="text-secondary text-center small mb-4">
             Fill the details to sign up
           </p>
@@ -155,6 +147,7 @@ export default function LoginSignupCard() {
               onChange={(e) =>
                 setSignupData({ ...signupData, name: e.target.value })
               }
+              required
             />
             <input
               type="text"
@@ -164,6 +157,7 @@ export default function LoginSignupCard() {
               onChange={(e) =>
                 setSignupData({ ...signupData, contact: e.target.value })
               }
+              required
             />
             <input
               type="email"
@@ -173,6 +167,7 @@ export default function LoginSignupCard() {
               onChange={(e) =>
                 setSignupData({ ...signupData, email: e.target.value })
               }
+              required
             />
             <input
               type="password"
@@ -182,6 +177,7 @@ export default function LoginSignupCard() {
               onChange={(e) =>
                 setSignupData({ ...signupData, password: e.target.value })
               }
+              required
             />
             <input
               type="password"
@@ -194,6 +190,7 @@ export default function LoginSignupCard() {
                   confirmPassword: e.target.value,
                 })
               }
+              required
             />
             <input
               type="date"
@@ -202,6 +199,7 @@ export default function LoginSignupCard() {
               onChange={(e) =>
                 setSignupData({ ...signupData, dob: e.target.value })
               }
+              required
             />
 
             <button

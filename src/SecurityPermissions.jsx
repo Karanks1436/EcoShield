@@ -118,9 +118,10 @@ export default function SecurityPermissions() {
         {allPermissionsGranted && (
           <button
             className="scan-btn"
-            onClick={() => navigate("/user")}
+            // onClick={() => navigate("/user")}
+            
           >
-            🚀 Start Scan
+            <a href="https://www.imei.info/">🚀 Start Scan</a>
           </button>
         )}
       </div>

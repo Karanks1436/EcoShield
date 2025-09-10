@@ -13,6 +13,9 @@ import UserHome from "./Userhome";
 import Navbar from "./Navbar";
 import ScamReport from "./ScamReport";
 import Footer from "./Footer";
+import AdminDash from "./Admin";
+import EmailBreaches from "./lginlist";
+import AntivirusDemo from "./AntivirusDemo";
 function App() {
   return (
     <Router>
@@ -29,6 +32,11 @@ function App() {
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/scam-reports" element={<ScamReport />} />
         <Route path="/footer" element={<Footer />} />
+        <Route path="/admindash" element={<AdminDash />} />
+        <Route path="/loggedinlist" element={<EmailBreaches />} />
+        <Route path="/antivirus" element={<AntivirusDemo />} />
+
+
       </Routes>
     </Router>
   );
