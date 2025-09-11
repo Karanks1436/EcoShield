@@ -43,14 +43,15 @@ export default function Contact() {
                 placeholder="Message"
                 whileFocus={{ scale: 1.02, borderColor: "#00ff88" }}
               />
-              <motion.button
-                type="submit"
-                className="btn btn-neon w-100"
-                whileHover={{ scale: 1.05, boxShadow: "0 0 20px #00ff88" }}
-                whileTap={{ scale: 0.95 }}
-              >
-                SEND
-              </motion.button>
+              <motion.a
+  href="mailto:Eco.shield.0001@gmail.com"   // opens email client
+  className="btn btn-neon w-100 text-center d-block"
+  whileHover={{ scale: 1.05, boxShadow: "0 0 20px #00ff88" }}
+  whileTap={{ scale: 0.95 }}
+>
+  SEND
+</motion.a>
+
             </form>
           </motion.div>
 
@@ -64,13 +65,13 @@ export default function Contact() {
             <div className="glass-card p-4 rounded-4 shadow-lg">
               <h4 className="text-light mb-3">Contact Info</h4>
               <p className="text-success">
-                <i className="bi bi-telephone text-neon me-2"></i> +91 1234567890
+                <i className="bi bi-telephone text-neon me-2"></i> +91 9041429065
               </p>
               <p className="text-success">
-                <i className="bi bi-envelope text-neon me-2"></i> Admin@gmail.com
+                <i className="bi bi-envelope text-neon me-2"></i> Eco.shield.0001@gmail.com
               </p>
               <p className="text-success">
-                <i className="bi bi-geo-alt text-neon me-2"></i> 1234 Street Name, City, State 12345
+                <i className="bi bi-geo-alt text-neon me-2"></i> Bathinda, Punjab, India
               </p>
             </div>
           </motion.div>

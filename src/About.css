@@ -158,7 +158,7 @@
 
 
 .about-page-ayush {
-  background-image: url('/public/ayush2.png'); /* Make sure image is in public folder */
+  background-image: url('/public/ayush3.png'); /* Make sure image is in public folder */
   background-repeat: no-repeat;
   background-size: contain;
   background-position: left;
@@ -180,10 +180,11 @@
 
 
 .about-page-sahil {
-  background-image: url('/public/sahil2.png'); /* Make sure image is in public folder */
+  background-image: url('/public/sahil3.png'); /* Make sure image is in public folder */
   background-repeat: no-repeat;
   background-size: contain;
   background-position: left;
+  margin-left: 10px;
   min-height: 100vh;
   position: relative;
   color: #fff;
@@ -309,3 +310,7 @@
 }
 
 
+a{
+  text-decoration: none;
+  color: white;
+}

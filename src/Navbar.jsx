@@ -141,9 +141,11 @@ export default function Navbar() {
         {/* Nav Links */}
         <ul className={`nav-links ${isOpen ? "open" : ""}`}>
           <li><a href="/userhome">Home</a></li>
-          <li><a href="/scan">Scan</a></li>
+          <li><a href="/user">Scan</a></li>
           <li><a href="hack-preventions">Preventive Measures</a></li>
           <li><a href="/scam-reports">Possible Scams</a></li>
+          <li><a href="/antivirus">Security</a></li>
+
           <li>
             <button className="logout-btn" onClick={handleLogout}>
               Logout

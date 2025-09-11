@@ -1,8 +1,23 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
+import { useEffect, useState } from "react";
+import AlienLoader from "./AlienLoader"; // Import the loader
 export default function Homepage() {
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading (e.g., API or assets)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Show loader for 2 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) return <AlienLoader />;
+
   return (
     <div className="homepage d-flex flex-column">
       {/* Navbar */}

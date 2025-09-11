@@ -1,46 +1,44 @@
 /* ==========================
-   UserHome.css (Minimal Sleek)
+   Black + Green Cyber Theme
    ========================== */
+
 .userhome-wrapper {
   min-height: 100vh;
-  width: 100%;
-  background: #000; /* Solid black base */
-  color: #cceede;   /* Muted green-white text */
+  background: #000; /* pure black base */
+  color: #d1f7d6; /* muted light green */
   font-family: "Segoe UI", sans-serif;
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.8s ease-in;
-  overflow-x: hidden;
 }
 
 /* --------------------------
    Hero Section
 --------------------------- */
 .hero-section {
-  width: 100%;
-  padding: 90px 20px 70px;
+  padding: 100px 20px 70px;
   text-align: center;
-  background: #0d0d0d; /* Dark grey-black */
+  background: #0b0b0b;
   border-bottom: 1px solid #003d1f;
 }
 
 .hero-title {
   font-size: 3rem;
-  font-weight: 600;
-  color: #00cc66; /* Calm green */
-  margin-bottom: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.hero-title span {
+  color: #00ff88; /* cyber green */
 }
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: #80ffbf;
+  color: #66ffb2;
   margin-top: 8px;
 }
 
 .hero-email {
   margin-top: 20px;
-  font-size: 1rem;
-  color: #00aa55;
+  font-size: 0.95rem;
+  color: #00ff88;
   background: #001a0d;
   display: inline-block;
   padding: 6px 14px;
@@ -49,73 +47,182 @@
 }
 
 /* --------------------------
-   Info Sections
+   Vision
 --------------------------- */
-.info-section {
-  width: 100%;
-  padding: 60px 10%;
-  border-bottom: 1px solid #1a3324;
-  background: #050505;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.info-section:hover {
-  background: #0a0a0a;
-  transform: translateY(-2px);
-}
-
-.info-section h2 {
-  font-size: 1.7rem;
-  font-weight: 500;
-  color: #00cc66;
-  margin-bottom: 12px;
-}
-
-.info-section p,
-.info-section ul,
-.info-section ol {
-  color: #cceede;
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.info-section ul,
-.info-section ol {
-  padding-left: 22px;
-}
-
-.info-section li {
-  margin-bottom: 8px;
+.info-card.wide {
+  margin: 50px auto;
+  max-width: 900px;
+  background: #0f0f0f;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #003d1f;
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.05);
 }
 
 /* --------------------------
-   CTA Footer
+   Stats
 --------------------------- */
-.cta-section {
+.stats-section {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px 10%;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  background: #0d0d0d;
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #004d26;
+  text-align: center;
+  width: 220px;
+  transition: transform 0.3s;
+}
+
+.stat-box:hover {
+  transform: scale(1.05);
+}
+
+.stat-box h3 {
+  font-size: 2rem;
+  color: #00ff88;
+  margin-bottom: 8px;
+}
+
+.stat-box p {
+  color: #b3ffda;
+}
+
+/* --------------------------
+   Cards Grid
+--------------------------- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  padding: 60px 10%;
+}
+
+.info-card {
+  background: #0d0d0d;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #003d1f;
+  transition: transform 0.3s;
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
+  border-color: #00ff88;
+}
+
+.info-card h2 {
+  color: #00ff88;
+  margin-bottom: 14px;
+  font-size: 1.5rem;
+}
+
+.info-card p,
+.info-card ul,
+.info-card ol {
+  color: #d1f7d6;
+  line-height: 1.6;
+}
+
+.info-card li {
+  margin-bottom: 6px;
+}
+
+/* --------------------------
+   Testimonials
+--------------------------- */
+.testimonials {
   padding: 70px 12%;
   text-align: center;
+  background: #0b0b0b;
+}
+
+.testimonials h2 {
+  color: #00ff88;
+  margin-bottom: 30px;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.testimonial {
   background: #0d0d0d;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #004d26;
+}
+
+.testimonial p {
+  color: #d1f7d6;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.testimonial span {
+  color: #66ffb2;
+  font-size: 0.9rem;
+}
+
+/* --------------------------
+   FAQ
+--------------------------- */
+.faq-section {
+  padding: 70px 12%;
+  background: #000;
+}
+
+.faq-section h2 {
+  color: #00ff88;
+  margin-bottom: 20px;
+}
+
+.faq-section details {
+  background: #0d0d0d;
+  margin: 10px 0;
+  padding: 12px 18px;
+  border-radius: 6px;
+  border: 1px solid #003d1f;
+  cursor: pointer;
+}
+
+.faq-section summary {
+  color: #66ffb2;
+  font-weight: 600;
+}
+
+.faq-section p {
+  margin-top: 8px;
+  color: #d1f7d6;
+}
+
+/* --------------------------
+   CTA
+--------------------------- */
+.cta-section {
+  padding: 80px 12%;
+  text-align: center;
+  background: #0b0b0b;
   border-top: 1px solid #003d1f;
 }
 
 .cta-section h2 {
-  font-size: 1.9rem;
-  color: #00cc66;
-  margin-bottom: 18px;
+  font-size: 1.8rem;
+  color: #00ff88;
+  margin-bottom: 16px;
 }
 
 .cta-section p {
-  font-size: 1.05rem;
-  color: #b3d9c6;
-  max-width: 650px;
+  font-size: 1rem;
+  color: #b3ffda;
+  max-width: 640px;
   margin: 0 auto;
-  line-height: 1.7;
-}
-
-/* --------------------------
-   Animations
---------------------------- */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
 }

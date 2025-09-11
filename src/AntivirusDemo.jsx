@@ -1,157 +1,151 @@
-// import React, { useState, useEffect } from "react";
-// import { db } from "./firebase";
-// import { collection, getDocs, addDoc } from "firebase/firestore";
+import React from "react";
+import { motion } from "framer-motion";
+import Navbar from "./Navbar";
 
-// export default function SecurityDashboard() {
-//   const [file, setFile] = useState(null);
-//   const [scanResult, setScanResult] = useState("");
-//   const [maliciousHashes, setMaliciousHashes] = useState([]);
-//   const [email, setEmail] = useState("");
-//   const [emailMessage, setEmailMessage] = useState("");
+export default function AntivirusProtection() {
+  const antivirusSites = [
+    {
+      name: "Kaspersky(*Recomended)",
+      url: "https://www.kaspersky.com",
+      desc: "Trusted cybersecurity solutions for home and business.",
+    },
+    {
+      name: "Norton",
+      url: "https://us.norton.com",
+      desc: "Powerful antivirus and identity protection.",
+    },
+    {
+      name: "McAfee",
+      url: "https://www.mcafee.com",
+      desc: "Comprehensive online security for devices and data.",
+    },
+    {
+      name: "Avast",
+      url: "https://www.avast.com",
+      desc: "Free and premium antivirus with modern protection.",
+    },
+    {
+      name: "Bitdefender",
+      url: "https://www.bitdefender.com",
+      desc: "Award-winning antivirus and cybersecurity solutions.",
+    },
+  ];
 
-//   // Load known malicious hashes from Firestore
-//   useEffect(() => {
-//     const fetchHashes = async () => {
-//       const snapshot = await getDocs(collection(db, "malicious_hashes"));
-//       const hashes = snapshot.docs.map((doc) => doc.data().hash);
-//       setMaliciousHashes(hashes);
-//     };
-//     fetchHashes();
-//   }, []);
+  return (
+    <>
+    <Navbar/>
+    <div className="antivirus-page py-5 bg-black text-light position-relative">
+      <style>{`
+        .antivirus-page {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          min-height: 100vh;
+        }
+        .page-title {
+          background: linear-gradient(90deg, #00ff9d, #00ff33);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-weight: 800;
+          font-size: 2.8rem;
+          letter-spacing: 1px;
+          text-shadow: 0 0 10px rgba(0, 255, 100, 0.2);
+        }
+        .page-subtitle {
+          color: #bbb;
+          font-size: 1.1rem;
+          margin-bottom: 2rem;
+        }
+        .glass-card {
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 14px;
+          border: 1px solid rgba(255, 255, 255, 0.07);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          padding: 20px;
+        }
+        .glass-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 10px 28px rgba(0, 255, 80, 0.15);
+        }
+        .card-title {
+          color: #00ff73;
+          font-size: 1.35rem;
+          margin-bottom: 10px;
+        }
+        .card-text {
+          font-size: 0.95rem;
+          color: #ccc;
+          line-height: 1.5;
+        }
+        .btn-dark-theme {
+          background: linear-gradient(90deg, #00ff6f, #00cc44);
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 6px;
+          transition: all 0.3s ease;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 0.95rem;
+          box-shadow: 0 3px 10px rgba(0, 255, 80, 0.2);
+        }
+        .btn-dark-theme:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(0, 255, 80, 0.35);
+          opacity: 0.95;
+        }
+      `}</style>
 
-//   // File scan handler
-//   const handleFileChange = (e) => {
-//     const f = e.target.files[0];
-//     if (!f) return;
-//     setFile(f);
+      {/* Title */}
+      <motion.h1
+        className="text-center page-title mb-2"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        🔒 Antivirus Protection
+      </motion.h1>
 
-//     const reader = new FileReader();
-//     reader.onload = async () => {
-//       const arrayBuffer = reader.result;
-//       const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
-//       const hashArray = Array.from(new Uint8Array(hashBuffer));
-//       const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+      {/* Subtitle */}
+      <motion.p
+        className="text-center page-subtitle"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+      >
+        ✅ Verified Antivirus Shields – Stay Safe, Stay Protected
+      </motion.p>
 
-//       if (maliciousHashes.includes(hashHex)) {
-//         setScanResult("⚠️ This file is malicious!");
-//       } else {
-//         setScanResult("✅ File appears safe.");
-//       }
-//     };
-//     reader.readAsArrayBuffer(f);
-//   };
-
-//   // Email check handler
-//   const handleEmailCheck = async () => {
-//     if (!email) return;
-//     setEmailMessage(`Checking ${email}...`);
-
-//     try {
-//       await addDoc(collection(db, "email_checks"), { email, createdAt: new Date() });
-//       setEmailMessage(`✅ ${email} checked and stored in database.`);
-//     } catch (err) {
-//       console.error(err);
-//       setEmailMessage("Error saving email.");
-//     }
-//   };
-
-//   return (
-//     <div className="dashboard-container">
-//       <h2>🔒 Security Dashboard</h2>
-
-//       {/* File Scanner */}
-//       <div className="section">
-//         <h3>1. Scan a File</h3>
-//         <input type="file" onChange={handleFileChange} className="input-file" />
-//         {file && <p className="info">File: {file.name}</p>}
-//         {scanResult && <p className="result">{scanResult}</p>}
-//       </div>
-
-//       {/* Email Check */}
-//       <div className="section">
-//         <h3>2. Check Email Breach (Optional)</h3>
-//         <input
-//           type="email"
-//           placeholder="Enter your email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           className="input-text"
-//         />
-//         <button onClick={handleEmailCheck} className="btn">Check Email</button>
-//         {emailMessage && <p className="result">{emailMessage}</p>}
-//       </div>
-
-//       <div className="section">
-//         <h3>⚠️ Note</h3>
-//         <p className="note">
-//           This dashboard <strong>cannot access your full device</strong>. It can only scan uploaded files and log emails.
-//           For real antivirus protection, install a dedicated antivirus software on your system.
-//         </p>
-//       </div>
-
-//       {/* Internal CSS */}
-//       <style>{`
-//         .dashboard-container {
-//           background-color: #121212;
-//           color: #eeeeee;
-//           min-height: 100vh;
-//           padding: 40px 20px;
-//           font-family: 'Segoe UI', sans-serif;
-//         }
-//         h2 {
-//           text-align: center;
-//           color: #00cc66;
-//           margin-bottom: 30px;
-//         }
-//         .section {
-//           background-color: #1e1e1e;
-//           padding: 20px;
-//           border-radius: 10px;
-//           margin-bottom: 25px;
-//           border-left: 4px solid #00cc66;
-//         }
-//         h3 {
-//           margin-top: 0;
-//           color: #00cc66;
-//         }
-//         .input-file, .input-text {
-//           width: 100%;
-//           padding: 10px;
-//           margin-top: 10px;
-//           border-radius: 6px;
-//           border: 1px solid #444;
-//           background-color: #000;
-//           color: #fff;
-//           font-size: 1rem;
-//         }
-//         .btn {
-//           margin-top: 10px;
-//           padding: 10px 15px;
-//           background-color: #00cc66;
-//           color: #000;
-//           border: none;
-//           border-radius: 6px;
-//           cursor: pointer;
-//           font-weight: bold;
-//           transition: 0.3s;
-//         }
-//         .btn:hover {
-//           background-color: #00994d;
-//           color: #fff;
-//         }
-//         .info {
-//           margin-top: 10px;
-//           color: #ccc;
-//         }
-//         .result {
-//           margin-top: 10px;
-//           font-weight: bold;
-//         }
-//         .note {
-//           font-size: 0.95rem;
-//           color: #ffcc00;
-//         }
-//       `}</style>
-//     </div>
-//   );
-// }
+      {/* Cards */}
+      <div className="container">
+        <div className="row g-4">
+          {antivirusSites.map((site, index) => (
+            <motion.div
+              key={index}
+              className="col-md-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <div className="card glass-card h-100 border-0 text-center">
+                <div className="card-body d-flex flex-column">
+                  <h4 className="card-title fw-bold">{site.name}</h4>
+                  <p className="card-text flex-grow-1">{site.desc}</p>
+                  <motion.a
+                    href={site.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-dark-theme mt-3"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Visit Site
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+    </>
+  );
+}

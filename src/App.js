@@ -8,7 +8,6 @@ import HackPreventions from "./HackPreventions";
 import Services from "./Services";
 import Contact from "./Contact";
 import AboutUs from "./About";
-import SecurityPermissions from "./SecurityPermissions";
 import UserHome from "./Userhome";
 import Navbar from "./Navbar";
 import ScamReport from "./ScamReport";
@@ -16,6 +15,7 @@ import Footer from "./Footer";
 import AdminDash from "./Admin";
 import EmailBreaches from "./lginlist";
 import AntivirusDemo from "./AntivirusDemo";
+import AlienLoader from "./AlienLoader";
 function App() {
   return (
     <Router>
@@ -27,7 +27,6 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/Scan" element={<SecurityPermissions />} />
         <Route path="/userhome" element={<UserHome />} />
         <Route path="/navbar" element={<Navbar />} />
         <Route path="/scam-reports" element={<ScamReport />} />
@@ -35,6 +34,8 @@ function App() {
         <Route path="/admindash" element={<AdminDash />} />
         <Route path="/loggedinlist" element={<EmailBreaches />} />
         <Route path="/antivirus" element={<AntivirusDemo />} />
+        <Route path="/alien" element={<AlienLoader />} />
+
 
 
       </Routes>
