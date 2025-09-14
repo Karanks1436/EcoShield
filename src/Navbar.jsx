@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
   const isActive = (path) => location.pathname === path;
@@ -235,7 +235,7 @@ export default function Navbar() {
 
       <nav className="navbar">
         <div className="nav-left">
-          <div className="nav-logo" onClick={() => navigate("/userhome")}>
+          <div className="nav-logo text-white" onClick={() => navigate("/userhome")}>
             <img src="/ecoshieldlogo.jpeg" className="rounded-circle" alt="Logo" />
             EcoShield
           </div>

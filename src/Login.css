@@ -85,3 +85,158 @@
   height: 100%;
   overflow-y: auto; /* allow inner scroll if content exceeds */
 }
+/* === Body & Page Background === */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #000;
+  color: #fff;
+}
+
+/* === Container === */
+.d-flex.min-vh-100 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* === Binary / Matrix Overlay === */
+.d-flex.min-vh-100::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url('https://img.freepik.com/premium-vector/closed-padlock-digital-background-black-cyber-security_42077-4581.jpg');
+  background-size: cover;
+  opacity: 0.08; /* subtle overlay */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* === Flip Card Wrapper === */
+.flip-card {
+  perspective: 1000px;
+  width: 400px;
+  height: 500px;
+  z-index: 1;
+  position: relative;
+}
+
+/* === Card Sides === */
+.flip-card-front,
+.flip-card-back {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(25, 25, 25, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.8s ease-in-out;
+}
+
+/* === Front / Back Flip === */
+.flip-card-front {
+  transform: rotateY(0deg);
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+.flip-card.flipped .flip-card-front {
+  transform: rotateY(-180deg);
+}
+.flip-card.flipped .flip-card-back {
+  transform: rotateY(0deg);
+}
+
+/* === Input Fields === */
+.form-control {
+  background-color: #111 !important;
+  border: 1px solid #333 !important;
+  color: #eee !important;
+  padding: 0.75rem 1rem !important;
+  margin-bottom: 1rem !important;
+  border-radius: 6px !important;
+}
+.form-control:focus {
+  outline: none !important;
+  border-color: #00f7ff !important;
+  box-shadow: 0 0 8px rgba(0, 247, 255, 0.5) !important;
+}
+
+/* === Buttons === */
+.btn-success {
+  background-color: #00f7ff !important;
+  border: none !important;
+  color: #000 !important;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+.btn-success:hover {
+  background-color: #00d6cc !important;
+  color: #000 !important;
+}
+
+.btn-primary {
+  background-color: #005aff !important;
+  border: none !important;
+  color: #fff !important;
+}
+.btn-primary:hover {
+  background-color: #0040cc !important;
+}
+
+.btn-warning {
+  background-color: #ff9900 !important;
+  border: none !important;
+  color: #000 !important;
+}
+.btn-warning:hover {
+  background-color: #e67e00 !important;
+}
+
+/* === Links === */
+.btn-link {
+  color: #00f7ff !important;
+  text-decoration: none !important;
+}
+.btn-link:hover {
+  color: #00d6cc !important;
+  text-decoration: underline !important;
+}
+
+/* === Card Shadow & Glow === */
+.flip-card-front,
+.flip-card-back {
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+/* === Typography === */
+h2 {
+  color: #00f7ff;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+p {
+  text-align: center;
+  color: #aaa;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+/* === Adjust OTP Inputs / spacing === */
+.flip-card-back input.form-control {
+  margin-bottom: 0.75rem !important;
+}

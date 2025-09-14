@@ -40,7 +40,7 @@ export default function LoginSignupCard() {
     emailjs
       .send(
         "service_6ho576f",
-        "template_ohhufzp",
+        "template_6jt6pid",
         templateParams,
         "D6VTLhpezsMJy0o0l"
       )
