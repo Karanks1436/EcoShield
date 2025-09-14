@@ -12,18 +12,7 @@ body, html {
   background-color: black;
 }
 
-.navbar {
-  background-color: black !important;
-}
 
-.nav-link {
-  color: #ccc !important;
-  transition: 0.3s;
-}
-
-.nav-link:hover {
-  color: #00ff88 !important;
-}
 
 .hero-img {
   max-width: 300px;

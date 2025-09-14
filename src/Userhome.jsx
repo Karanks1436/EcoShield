@@ -42,21 +42,7 @@ export default function UserHome() {
           </p>
         </section>
 
-        {/* Stats */}
-        <section className="stats-section">
-          <div className="stat-box">
-            <h3>50K+</h3>
-            <p>Users Protected</p>
-          </div>
-          <div className="stat-box">
-            <h3>200+</h3>
-            <p>Cybersecurity Guides</p>
-          </div>
-          <div className="stat-box">
-            <h3>99.9%</h3>
-            <p>Threat Awareness Accuracy</p>
-          </div>
-        </section>
+       
 
         {/* Features */}
         <div className="cards-grid">
@@ -90,56 +76,8 @@ export default function UserHome() {
             </ul>
           </section>
         </div>
-
-        {/* Testimonials */}
-        <section className="testimonials">
-          <h2>💬 What Our Users Say</h2>
-          <div className="testimonial-grid">
-            <div className="testimonial">
-              <p>
-                “EcoShield helped me understand how to protect my online
-                banking. Clear and simple guides!”
-              </p>
-              <span>- Priya, Student</span>
-            </div>
-            <div className="testimonial">
-              <p>
-                “Our team uses EcoShield resources to train employees on
-                phishing awareness. Very effective!”
-              </p>
-              <span>- Rahul, IT Manager</span>
-            </div>
-            <div className="testimonial">
-              <p>
-                “Finally, a cybersecurity site that doesn’t overwhelm beginners
-                with jargon. Love it!”
-              </p>
-              <span>- Ananya, Freelancer</span>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="faq-section">
-          <h2>❓ Frequently Asked Questions</h2>
-          <details>
-            <summary>Is EcoShield free to use?</summary>
-            <p>Yes! All guides and resources are 100% free.</p>
-          </details>
-          <details>
-            <summary>Can I contribute to EcoShield?</summary>
-            <p>
-              Absolutely! Join our community and share your knowledge to help
-              others stay safe.
-            </p>
-          </details>
-          <details>
-            <summary>Do I need technical skills?</summary>
-            <p>No, we focus on simplicity. Anyone can follow our steps.</p>
-          </details>
-        </section>
-
-        {/* Call to Action */}
+      
+       {/* Call to Action */}
         <footer className="cta-section">
           <h2>💡 Stay Informed, Stay Safe</h2>
           <p>

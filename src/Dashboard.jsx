@@ -21,40 +21,42 @@ export default function Homepage() {
   return (
     <div className="homepage d-flex flex-column">
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-black px-4">
-        <div className="container-fluid">
-          <a className="navbar-brand fw-bold text-success fs-3" href="#home">
-            Eco Shield
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+     <nav className="navbar navbar-expand-lg navbar-dark bg-black px-4">
+  <div className="container-fluid">
+    <a className="navbar-brand fw-bold text-success fs-3" href="#home">
+      Eco Shield
+    </a>
+    <button
+      className="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span className="navbar-toggler-icon"></span>
+    </button>
 
-          <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item mx-2">
-                <a className="nav-link fw-semibold" href="#home">Home</a>
-              </li>
-              <li className="nav-item mx-2">
-                <a className="nav-link fw-semibold" href="/about">About</a>
-              </li>
-              <li className="nav-item mx-2">
-                <a className="nav-link fw-semibold" href="/services">Services</a>
-              </li>
-              <li className="nav-item mx-2">
-                <a className="nav-link bg-success rounded text-black fw-semibold" href="/auth">
-                  Login/SignUp
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul className="navbar-nav text-center">
+        <li className="nav-item mx-2 my-1">
+          <a className="nav-link fw-semibold" href="#home">Home</a>
+        </li>
+        <li className="nav-item mx-2 my-1">
+          <a className="nav-link fw-semibold" href="/about">About</a>
+        </li>
+        <li className="nav-item mx-2 my-1">
+          <a className="nav-link fw-semibold" href="/services">Services</a>
+        </li>
+        <li className="nav-item mx-2 my-1">
+          <a className="nav-link bg-success rounded text-black fw-semibold" href="/auth">Login/SignUp</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 
       {/* Hero Section */}
       <div
@@ -101,7 +103,7 @@ export default function Homepage() {
         <div className="container">
           <h2 className="fw-bold text-success mb-4">Why Choose Eco Shield?</h2>
           <div className="row">
-            <div className="col-md-4 mb-4">
+            <div className="col-md-6 mb-4">
               <div className="p-4 border rounded-4 bg-black text-light shadow-sm h-100">
                 <h5 className="fw-bold mb-2">🛡️ Advanced Protection</h5>
                 <p className="mb-0">
@@ -109,7 +111,7 @@ export default function Homepage() {
                 </p>
               </div>
             </div>
-            <div className="col-md-4 mb-4">
+            <div className="col-md-6 mb-4">
               <div className="p-4 border rounded-4 bg-black text-light shadow-sm h-100">
                 <h5 className="fw-bold mb-2">⚡ Lightning Fast</h5>
                 <p className="mb-0">
@@ -117,14 +119,14 @@ export default function Homepage() {
                 </p>
               </div>
             </div>
-            <div className="col-md-4 mb-4">
+            {/* <div className="col-md-4 mb-4">
               <div className="p-4 border rounded-4 bg-black text-light shadow-sm h-100">
                 <h5 className="fw-bold mb-2">🌍 Global Coverage</h5>
                 <p className="mb-0">
                   Trusted by individuals and businesses across the world.
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

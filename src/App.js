@@ -16,6 +16,7 @@ import AdminDash from "./Admin";
 import EmailBreaches from "./lginlist";
 import AntivirusDemo from "./AntivirusDemo";
 import AlienLoader from "./AlienLoader";
+import ProfilePage from "./ProfilePage";
 function App() {
   return (
     <Router>
@@ -35,6 +36,7 @@ function App() {
         <Route path="/loggedinlist" element={<EmailBreaches />} />
         <Route path="/antivirus" element={<AntivirusDemo />} />
         <Route path="/alien" element={<AlienLoader />} />
+        <Route path="/profile" element={<ProfilePage />} />
 
 
 

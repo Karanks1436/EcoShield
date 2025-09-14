@@ -80,11 +80,11 @@ export default function ScamReport() {
     <>
       <Navbar />
       <div className="scam-container">
-        {user.email && <div className="user-info">👤 {user.email}</div>}
+        {/* {user.email && <div className="user-info">👤 {user.email}</div>} */}
         <h1 className="scam-title">🚨 Scam Reports</h1>
 
         <form className="scam-form" onSubmit={handleSubmit}>
-          {user.email === "hackeradmin@gmail.com" ? (
+          {user.email === "eco.shield.0001@gmail.com" ? (
             <>
               <input
                 type="text"
@@ -105,7 +105,7 @@ export default function ScamReport() {
             </>
           ) : (
             <p className="readonly-msg">
-              ⚠️ Only the admin can upload scams. You can view the reports below.
+              {/* ⚠️ Only the admin can upload scams. You can view the reports below. */}
             </p>
           )}
         </form>
@@ -119,7 +119,7 @@ export default function ScamReport() {
                 <h3>{scam.title}</h3>
                 {scam.image && <img src={scam.image} alt="scam evidence" />}
                 <p>{scam.details}</p>
-                {user.email === "hackeradmin@gmail.com" && (
+                {user.email === "eco.shield.0001@gmail.com" && (
                   <button onClick={() => handleDelete(scam.id)}>Delete</button>
                 )}
               </div>

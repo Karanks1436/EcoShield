@@ -45,7 +45,7 @@ export default function Contact() {
               />
               <motion.a
   href="mailto:Eco.shield.0001@gmail.com"   // opens email client
-  className="btn btn-neon w-100 text-center d-block"
+  className="btn btn-neon w-100 text-center text-secondary d-block"
   whileHover={{ scale: 1.05, boxShadow: "0 0 20px #00ff88" }}
   whileTap={{ scale: 0.95 }}
 >

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Navbar from "./Navbar";
 
 export default function ImeiLookup() {
   const [imei, setImei] = useState("");
@@ -122,6 +123,7 @@ Format clearly in bullet points with ✅ Safe / ⚠️ Warning indicators.`
   };
 
   return (
+    <><Navbar/>
     <div className="min-vh-100 d-flex justify-content-center align-items-center bg-black text-light">
       <div className="card p-4 w-75" style={{
         backgroundColor: "#0d0d0d",
@@ -204,5 +206,6 @@ Format clearly in bullet points with ✅ Safe / ⚠️ Warning indicators.`
         )}
       </div>
     </div>
+    </>
   );
 }
