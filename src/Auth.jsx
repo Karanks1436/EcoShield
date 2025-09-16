@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 
 export default function LoginSignupCard() {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  // Login States
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [loginOtp, setLoginOtp] = useState("");
+  const [generatedLoginOtp, setGeneratedLoginOtp] = useState(null);
+  const [loginOtpSent, setLoginOtpSent] = useState(false);
+  const [loginOtpVerified, setLoginOtpVerified] = useState(false);
+  const [loginOtpExpiry, setLoginOtpExpiry] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  // Signup States
   const [signupData, setSignupData] = useState({
     name: "",
     contact: "",
@@ -21,186 +33,159 @@ export default function LoginSignupCard() {
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const getDeviceType = () => {
-    const ua = navigator.userAgent;
-    return /Mobi|Android/i.test(ua) ? "mobile" : "desktop";
+  const validateSignupData = (field, value) => {
+    let error = "";
+    switch (field) {
+      case "contact":
+        if (!/^\d{0,10}$/.test(value)) error = "Contact must contain up to 10 digits.";
+        break;
+      case "email":
+        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) error = "Invalid email format.";
+        break;
+      case "password":
+        if (
+          value &&
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(value)
+        )
+          error = "Min 8 chars, uppercase, lowercase, digit, special char required.";
+        break;
+      case "confirmPassword":
+        if (value !== signupData.password) error = "Passwords do not match.";
+        break;
+      default:
+        break;
+    }
+    setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
   const sendOtpEmail = () => {
     const generated = Math.floor(100000 + Math.random() * 900000).toString();
     setGeneratedOtp(generated);
-
     const templateParams = {
       to_email: signupData.email,
       otp: generated,
     };
-
     emailjs
-      .send(
-        "service_6ho576f",
-        "template_6jt6pid",
-        templateParams,
-        "D6VTLhpezsMJy0o0l"
-      )
-      .then(
-        (response) => {
-          alert("OTP sent to your email! Please check.");
-          setOtpSent(true);
-        },
-        (error) => {
-          alert("Failed to send OTP. Try again.");
-        }
-      );
+      .send("service_6ho576f", "template_6jt6pid", templateParams, "D6VTLhpezsMJy0o0l")
+      .then(() => {
+        alert("OTP sent to your email! Please check.");
+        setOtpSent(true);
+      })
+      .catch(() => alert("Failed to send OTP. Try again."));
   };
 
   const verifyOtp = () => {
     if (otp === generatedOtp) {
-      alert("OTP verified successfully! You can now complete signup.");
+      alert("OTP verified successfully!");
       setOtpVerified(true);
     } else {
-      alert("Incorrect OTP. Please try again.");
+      alert("Incorrect OTP.");
     }
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-
-    if (!otpVerified) {
-      alert("Please verify OTP before signing up.");
-      return;
-    }
-
-    if (signupData.password !== signupData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    if (!/^\d{10}$/.test(signupData.contact)) {
-      alert("Mobile number must be exactly 10 digits.");
-      return;
-    }
-
-    if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(
-        signupData.password
-      )
-    ) {
-      alert(
-        "Password must be at least 8 characters and include uppercase, lowercase, digit, and special character."
-      );
-      return;
-    }
-
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    if (existingUsers.some((u) => u.email === signupData.email)) {
-      alert("User already exists with this email!");
-      return;
-    }
-
-    const newUser = {
-      name: signupData.name,
-      contact: signupData.contact,
-      email: signupData.email,
-      password: signupData.password,
-      dob: signupData.dob,
-      status: "Active",
-    };
-
-    existingUsers.push(newUser);
-    localStorage.setItem("users", JSON.stringify(existingUsers));
-
-    alert("Signup successful! You can login now.");
-
-    setLoginEmail(signupData.email);
-    setLoginPassword(signupData.password);
-    setIsFlipped(false);
-    setOtpSent(false);
-    setOtpVerified(false);
-    setGeneratedOtp(null);
-    setOtp("");
-  };
-
-  const handleLogin = () => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const foundUser = users.find(
-      (u) => u.email === loginEmail && u.password === loginPassword
-    );
-
-    if (!foundUser) {
-      alert("Invalid credentials or user not found!");
-      return;
-    }
-
-    const deviceType = getDeviceType();
-    const loggedInDevices =
-      JSON.parse(localStorage.getItem("loggedInDevices")) || {};
-
-    const userDevices = loggedInDevices[foundUser.email] || {
-      mobile: false,
-      desktop: false,
-    };
-
-    if (userDevices[deviceType]) {
-      alert(
-        `This account is already logged in on another ${deviceType} device.`
-      );
-      return;
-    }
-
-    userDevices[deviceType] = true;
-    loggedInDevices[foundUser.email] = userDevices;
-    localStorage.setItem("loggedInDevices", JSON.stringify(loggedInDevices));
-
-    localStorage.setItem("user", JSON.stringify(foundUser));
-
-    const loggedInUsers =
-      JSON.parse(localStorage.getItem("loggedInUsers")) || [];
-    if (!loggedInUsers.some((u) => u.email === foundUser.email)) {
-      loggedInUsers.push(foundUser);
-      localStorage.setItem("loggedInUsers", JSON.stringify(loggedInUsers));
-    }
-
-    alert(`Welcome back, ${foundUser.name}! 🎉`);
-
-    if (foundUser.email === "eco.shield.0001@gmail.com") {
-      navigate("/admindash");
-    } else {
-      navigate("/userhome");
-    }
-  };
-
-  const handleLogout = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      const deviceType = getDeviceType();
-      const loggedInDevices =
-        JSON.parse(localStorage.getItem("loggedInDevices")) || {};
-      if (loggedInDevices[user.email]) {
-        loggedInDevices[user.email][deviceType] = false;
-        localStorage.setItem(
-          "loggedInDevices",
-          JSON.stringify(loggedInDevices)
-        );
+    if (!otpVerified) return alert("Please verify OTP first.");
+    try {
+      const response = await fetch("https://eco-shield-backend.onrender.com/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signupData),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        alert("Signup successful!");
+        setLoginEmail(signupData.email);
+        setLoginPassword(signupData.password);
+        setIsFlipped(false);
+        setOtp("");
+        setOtpSent(false);
+        setOtpVerified(false);
+        setGeneratedOtp(null);
+      } else {
+        alert(result.error || "Signup failed.");
       }
+    } catch (err) {
+      alert("Server error during signup.");
     }
-    localStorage.removeItem("user");
-    navigate("/login");
   };
+
+  const sendLoginOtp = () => {
+    if (!loginEmail) return alert("Enter your email first.");
+    if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
+
+    const generated = Math.floor(100000 + Math.random() * 900000).toString();
+    setGeneratedLoginOtp(generated);
+    setLoginOtpExpiry(Date.now() + 10 * 60 * 1000); // 10 min
+
+    const templateParams = {
+      to_email: loginEmail,
+      otp: generated,
+    };
+
+    emailjs
+      .send("service_6ho576f", "template_6jt6pid", templateParams, "D6VTLhpezsMJy0o0l")
+      .then(() => {
+        alert("Login OTP sent!");
+        setLoginOtpSent(true);
+      })
+      .catch(() => alert("Failed to send OTP."));
+  };
+
+  const verifyLoginOtp = () => {
+    if (!generatedLoginOtp || Date.now() > loginOtpExpiry) {
+      alert("OTP expired. Request a new one.");
+      setLoginOtpSent(false);
+      setLoginOtp("");
+      setGeneratedLoginOtp(null);
+      return;
+    }
+if (loginOtp === generatedLoginOtp) {
+  alert("OTP verified! Logging in...");
+  setLoggedIn(true);
+  navigate("/userhome");
+}
+else {
+      alert("Incorrect OTP.");
+    }
+  };
+
+const handleLogin = async () => {
+  try {
+    const response = await fetch("https://eco-shield-backend.onrender.com/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+    });
+    const result = await response.json();
+
+    if (response.ok) {
+      alert("Login successful!");
+      setLoggedIn(true);
+      navigate("/dashboard"); // Redirect user to dashboard
+    } else {
+      alert(result.error || "Invalid credentials.");
+    }
+  } catch {
+    alert("Server error during login.");
+  }
+};
 
   return (
     <div className="d-flex align-items-center justify-content-center min-vh-100 bg-black position-relative overflow-hidden">
       <div className="bg-glow"></div>
 
       <div className={`flip-card ${isFlipped ? "flipped" : ""}`}>
-        {/* 🔑 Front Side - Login */}
+        {/* Login Side */}
         <div className="flip-card-front glass-card p-4 p-md-5 rounded-4 shadow-lg mx-3">
           <h2 className="text-white fw-bold text-center">Welcome Back</h2>
-          <p className="text-secondary text-center small mb-4">
-            Sign in to your account
-          </p>
+          <p className="text-secondary text-center small mb-4">Sign in to your account</p>
 
           <input
             type="email"
@@ -209,21 +194,70 @@ export default function LoginSignupCard() {
             value={loginEmail}
             onChange={(e) => setLoginEmail(e.target.value)}
           />
-          <input
-            type="password"
-            className="form-control bg-dark text-light border-0 mb-3"
-            placeholder="Password"
-            value={loginPassword}
-            onChange={(e) => setLoginPassword(e.target.value)}
-          />
+
+          <div className="position-relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              className="form-control bg-dark text-light border-0 mb-3"
+              placeholder="Password"
+              value={loginPassword}
+              onChange={(e) => setLoginPassword(e.target.value)}
+            />
+            <span
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="position-absolute top-50 end-0 translate-middle-y me-3"
+              style={{ cursor: "pointer", color: "#ccc" }}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+
+          {/* Terms & Conditions */}
+          <div className="form-check mb-3 text-light">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="termsCheck"
+              checked={acceptedTerms}
+              onChange={() => setAcceptedTerms(!acceptedTerms)}
+            />
+            <label className="form-check-label small" htmlFor="termsCheck">
+              I agree to the{" "}
+              <a href="/terms" className="text-decoration-underline text-success" target="_blank" rel="noopener noreferrer">
+                Terms & Conditions
+              </a>
+            </label>
+          </div>
 
           <button
-            className="btn btn-success w-100 fw-bold"
+            className="btn btn-success w-100 fw-bold mb-3"
             style={{ borderRadius: "12px" }}
-            onClick={handleLogin}
+            onClick={sendLoginOtp}
+            disabled={!acceptedTerms}
           >
-            Login
+            Send Login OTP
           </button>
+
+          {loginOtpSent && !loginOtpVerified && (
+            <>
+              <input
+                type="text"
+                className="form-control bg-dark text-light border-0 mb-3 mt-3"
+                placeholder="Enter Login OTP"
+                value={loginOtp}
+                maxLength="6"
+                onChange={(e) => setLoginOtp(e.target.value)}
+              />
+              <button
+                className="btn btn-warning w-100 fw-semibold"
+                style={{ borderRadius: "12px" }}
+                onClick={verifyLoginOtp}
+                disabled={!acceptedTerms}
+              >
+                Verify OTP
+              </button>
+            </>
+          )}
 
           <p className="text-center text-secondary small mt-4">
             Don’t have an account?{" "}
@@ -236,7 +270,7 @@ export default function LoginSignupCard() {
           </p>
         </div>
 
-        {/* 📝 Back Side - Signup */}
+        {/* Signup Side */}
         <div className="flip-card-back glass-card p-4 p-md-5 rounded-4 shadow-lg mx-3">
           <h2 className="text-white fw-bold mb-2 text-center">Create Account</h2>
           <p className="text-secondary text-center small mb-4">
@@ -246,11 +280,8 @@ export default function LoginSignupCard() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              if (!otpSent) {
-                sendOtpEmail();
-              } else if (otpVerified) {
-                handleSignup(e);
-              }
+              if (!otpSent) sendOtpEmail();
+              else if (otpVerified) handleSignup(e);
             }}
           >
             <input
@@ -269,46 +300,84 @@ export default function LoginSignupCard() {
               placeholder="Contact (10 digits)"
               value={signupData.contact}
               maxLength="10"
-              onChange={(e) =>
-                /^\d*$/.test(e.target.value) &&
-                e.target.value.length <= 10 &&
-                setSignupData({ ...signupData, contact: e.target.value })
-              }
-              required
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value) && value.length <= 10) {
+                  setSignupData({ ...signupData, contact: value });
+                  validateSignupData("contact", value);
+                }
+              }}
             />
+            {errors.contact && (
+              <small className="text-danger">{errors.contact}</small>
+            )}
+
             <input
               type="email"
               className="form-control bg-dark text-light border-0 mb-3"
               placeholder="Email"
               value={signupData.email}
-              onChange={(e) =>
-                setSignupData({ ...signupData, email: e.target.value })
-              }
+              onChange={(e) => {
+                const value = e.target.value;
+                setSignupData({ ...signupData, email: value });
+                validateSignupData("email", value);
+              }}
               required
             />
-            <input
-              type="password"
-              className="form-control bg-dark text-light border-0 mb-3"
-              placeholder="Password"
-              value={signupData.password}
-              onChange={(e) =>
-                setSignupData({ ...signupData, password: e.target.value })
-              }
-              required
-            />
-            <input
-              type="password"
-              className="form-control bg-dark text-light border-0 mb-3"
-              placeholder="Confirm Password"
-              value={signupData.confirmPassword}
-              onChange={(e) =>
-                setSignupData({
-                  ...signupData,
-                  confirmPassword: e.target.value,
-                })
-              }
-              required
-            />
+            {errors.email && (
+              <small className="text-danger">{errors.email}</small>
+            )}
+
+            <div className="position-relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control bg-dark text-light border-0 mb-3"
+                placeholder="Password"
+                value={signupData.password}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSignupData({ ...signupData, password: value });
+                  validateSignupData("password", value);
+                }}
+                required
+              />
+              <span
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="position-absolute top-50 end-0 translate-middle-y me-3"
+                style={{ cursor: "pointer", color: "#ccc" }}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+            {errors.password && (
+              <small className="text-danger">{errors.password}</small>
+            )}
+
+            <div className="position-relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                className="form-control bg-dark text-light border-0 mb-3"
+                placeholder="Confirm Password"
+                value={signupData.confirmPassword}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSignupData({ ...signupData, confirmPassword: value });
+                  validateSignupData("confirmPassword", value);
+                }}
+                required
+              />
+              <span
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                className="position-absolute top-50 end-0 translate-middle-y me-3"
+                style={{ cursor: "pointer", color: "#ccc" }}
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+            {errors.confirmPassword && (
+              <small className="text-danger">{errors.confirmPassword}</small>
+            )}
+
             <input
               type="date"
               className="form-control bg-dark text-light border-0 mb-3"
