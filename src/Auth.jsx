@@ -12,11 +12,6 @@ export default function LoginSignupCard() {
   // Login States
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [loginOtp, setLoginOtp] = useState("");
-  const [generatedLoginOtp, setGeneratedLoginOtp] = useState(null);
-  const [loginOtpSent, setLoginOtpSent] = useState(false);
-  const [loginOtpVerified, setLoginOtpVerified] = useState(false);
-  const [loginOtpExpiry, setLoginOtpExpiry] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
   // Signup States
@@ -46,7 +41,8 @@ export default function LoginSignupCard() {
         if (!/^\d{0,10}$/.test(value)) error = "Contact must contain up to 10 digits.";
         break;
       case "email":
-        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) error = "Invalid email format.";
+        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value))
+          error = "Invalid email format.";
         break;
       case "password":
         if (
@@ -89,74 +85,39 @@ export default function LoginSignupCard() {
     }
   };
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    if (!otpVerified) return alert("Please verify OTP first.");
-    try {
-      const response = await fetch("https://eco-shield-backend.onrender.com/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(signupData),
-      });
-      const result = await response.json();
-      if (response.ok) {
-        alert("Signup successful!");
-        setLoginEmail(signupData.email);
-        setLoginPassword(signupData.password);
-        setIsFlipped(false);
-        setOtp("");
-        setOtpSent(false);
-        setOtpVerified(false);
-        setGeneratedOtp(null);
-      } else {
-        alert(result.error || "Signup failed.");
-      }
-    } catch (err) {
-      alert("Server error during signup.");
+ const handleSignup = async (e) => {
+  e.preventDefault();
+  if (!otpVerified) return alert("Please verify OTP first.");
+  try {
+    const response = await fetch("https://eco-shield-backend.onrender.com/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(signupData),
+    });
+    const result = await response.json();
+    if (response.ok) {
+      alert("Signup successful!");
+
+      // ✅ Save email to localStorage
+      localStorage.setItem("user", JSON.stringify({ email: signupData.email }));
+
+      setLoginEmail(signupData.email);
+      setLoginPassword(signupData.password);
+      setIsFlipped(false);
+      setOtp("");
+      setOtpSent(false);
+      setOtpVerified(false);
+      setGeneratedOtp(null);
+    } else {
+      alert(result.error || "Signup failed.");
     }
-  };
-
-  const sendLoginOtp = () => {
-    if (!loginEmail) return alert("Enter your email first.");
-    if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
-
-    const generated = Math.floor(100000 + Math.random() * 900000).toString();
-    setGeneratedLoginOtp(generated);
-    setLoginOtpExpiry(Date.now() + 10 * 60 * 1000); // 10 min
-
-    const templateParams = {
-      to_email: loginEmail,
-      otp: generated,
-    };
-
-    emailjs
-      .send("service_6ho576f", "template_6jt6pid", templateParams, "D6VTLhpezsMJy0o0l")
-      .then(() => {
-        alert("Login OTP sent!");
-        setLoginOtpSent(true);
-      })
-      .catch(() => alert("Failed to send OTP."));
-  };
-
-  const verifyLoginOtp = () => {
-    if (!generatedLoginOtp || Date.now() > loginOtpExpiry) {
-      alert("OTP expired. Request a new one.");
-      setLoginOtpSent(false);
-      setLoginOtp("");
-      setGeneratedLoginOtp(null);
-      return;
-    }
-if (loginOtp === generatedLoginOtp) {
-  alert("OTP verified! Logging in...");
-  setLoggedIn(true);
-  navigate("/userhome");
-}
-else {
-      alert("Incorrect OTP.");
-    }
-  };
+  } catch (err) {
+    alert("Server error during signup.");
+  }
+};
 
 const handleLogin = async () => {
+  if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
   try {
     const response = await fetch("https://eco-shield-backend.onrender.com/login", {
       method: "POST",
@@ -167,8 +128,12 @@ const handleLogin = async () => {
 
     if (response.ok) {
       alert("Login successful!");
+
+      // ✅ Save email to localStorage
+      localStorage.setItem("user", JSON.stringify({ email: loginEmail }));
+
       setLoggedIn(true);
-      navigate("/dashboard"); // Redirect user to dashboard
+      navigate("/userhome");
     } else {
       alert(result.error || "Invalid credentials.");
     }
@@ -223,7 +188,12 @@ const handleLogin = async () => {
             />
             <label className="form-check-label small" htmlFor="termsCheck">
               I agree to the{" "}
-              <a href="/terms" className="text-decoration-underline text-success" target="_blank" rel="noopener noreferrer">
+              <a
+                href="/terms"
+                className="text-decoration-underline text-success"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Terms & Conditions
               </a>
             </label>
@@ -232,32 +202,11 @@ const handleLogin = async () => {
           <button
             className="btn btn-success w-100 fw-bold mb-3"
             style={{ borderRadius: "12px" }}
-            onClick={sendLoginOtp}
+            onClick={handleLogin}
             disabled={!acceptedTerms}
           >
-            Send Login OTP
+            Login
           </button>
-
-          {loginOtpSent && !loginOtpVerified && (
-            <>
-              <input
-                type="text"
-                className="form-control bg-dark text-light border-0 mb-3 mt-3"
-                placeholder="Enter Login OTP"
-                value={loginOtp}
-                maxLength="6"
-                onChange={(e) => setLoginOtp(e.target.value)}
-              />
-              <button
-                className="btn btn-warning w-100 fw-semibold"
-                style={{ borderRadius: "12px" }}
-                onClick={verifyLoginOtp}
-                disabled={!acceptedTerms}
-              >
-                Verify OTP
-              </button>
-            </>
-          )}
 
           <p className="text-center text-secondary small mt-4">
             Don’t have an account?{" "}
