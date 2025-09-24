@@ -260,7 +260,7 @@ export default function Navbar() {
                 <a href="/contact">Contact</a>
               </div>
             </div>
-
+ <a href="/climate" className={isActive("/climate") ? "active" : ""}> Climate Research</a>
             {user && user.email === "eco.shield.0001@gmail.com" && (
               <a href="/admindash" className={isActive("/admindash") ? "active" : ""}>🧑‍💻 Admin</a>
             )}

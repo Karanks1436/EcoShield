@@ -2,7 +2,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getAuth } from "firebase/auth";
+import { getAuth,GoogleAuthProvider  } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyAAFpVnAfZWVg_XVga1pcbEHlnlrGvZ9Ik",
   authDomain: "eco-shield-green.firebaseapp.com",
@@ -21,3 +21,4 @@ export const db = getFirestore(app);
 // Optional: Storage reference
 export const storage = getStorage(app);
 export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();

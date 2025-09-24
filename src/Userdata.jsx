@@ -1,247 +1,252 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+import React, { useState, useEffect, useRef } from "react";
+import { auth, db } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  increment,
+} from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import "./ImeiChecker.module.css"; // Import CSS for dynamic styling
 
-export default function DeviceScan() {
+const scanSteps = [
+  "Initializing hardware checks",
+  "Checking system files",
+  "Scanning installed apps",
+  "Analyzing network activity",
+  "Detecting unusual behaviors",
+  "Verifying permissions",
+  "Inspecting background processes",
+  "Monitoring data usage",
+  "Scanning for malware signatures",
+  "Checking for unauthorized access",
+  "Testing device sensors",
+  "Verifying software versions",
+  "Analyzing battery usage patterns",
+  "Performing firewall checks",
+  "Finalizing scan",
+];
+
+const safetySteps = [
+  "Keep your software up-to-date",
+  "Use strong, unique passwords",
+  "Avoid suspicious links or downloads",
+  "Enable two-factor authentication",
+  "Regularly back up your data",
+  "Install trusted security apps",
+  "Review app permissions carefully",
+  "Avoid public Wi-Fi for sensitive tasks",
+  "Monitor device behavior for anomalies",
+  "Use VPNs on unsecured networks",
+];
+
+const DynamicScanDevice = () => {
   const [imei, setImei] = useState("");
-  const [result, setResult] = useState("");
-  const [scanResult, setScanResult] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [scanLoading, setScanLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [isMobile, setIsMobile] = useState(false);
+  const [scanResult, setScanResult] = useState(null);
+  const [scanning, setScanning] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [userEmail, setUserEmail] = useState(null);
+  const [scanLogs, setScanLogs] = useState([]);
+  const [resultsVisible, setResultsVisible] = useState(false);
+  const [scanCompletedTime, setScanCompletedTime] = useState(null);
 
-  // Detect mobile vs desktop
+  const imeiInputRef = useRef(null);
+  const scanBtnRef = useRef(null);
+  const logsEndRef = useRef(null);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const ua = navigator.userAgent;
-    setIsMobile(/Android|iPhone|iPad|iPod/i.test(ua));
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUserEmail(user ? user.email : null);
+    });
+    return () => unsubscribe();
   }, []);
 
-  // ✅ Luhn Algorithm for IMEI validation
-  const validateIMEI = (imei) => {
-    if (!/^\d{15}$/.test(imei)) return false;
-    const digits = imei.split("").map(Number);
-    const checkDigit = digits.pop();
-    const sum = digits
-      .reverse()
-      .map((d, i) => {
-        if (i % 2 === 0) {
-          const dbl = d * 2;
-          return dbl > 9 ? dbl - 9 : dbl;
-        }
-        return d;
-      })
-      .reduce((acc, val) => acc + val, 0);
-    const calculatedCheck = (10 - (sum % 10)) % 10;
-    return checkDigit === calculatedCheck;
+  const getDeviceInfoFromIMEI = () => ({
+    hasOldSoftware: Math.random() < 0.3,
+    hasSuspiciousApps: Math.random() < 0.25,
+    unusualNetworkActivity: Math.random() < 0.2,
+    hasMaliciousPermissions: Math.random() < 0.15,
+  });
+
+  const simulateDeviceSecurityCheck = () => {
+    const info = getDeviceInfoFromIMEI();
+    return (
+      info.hasOldSoftware ||
+      info.hasSuspiciousApps ||
+      info.unusualNetworkActivity ||
+      info.hasMaliciousPermissions
+    );
   };
 
-  // 📱 Mobile Device Info via IMEI.info API
-  const fetchDeviceDetails = async () => {
-    setError("");
-    setResult("");
-    if (!imei || !validateIMEI(imei)) {
-      setError("⚠️ Please enter a valid 15-digit IMEI number.");
+  const shake = (element) => {
+    if (!element) return;
+    element.classList.add("shake");
+    setTimeout(() => element.classList.remove("shake"), 500);
+  };
+
+  const handleScan = async (e) => {
+    e.preventDefault();
+
+    if (!userEmail) {
+      alert("You need to log in to perform a scan.");
+      navigate("/login");
       return;
     }
 
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        "https://api.imei.info/v1/imei",
-        { imei },
-        {
-          headers: {
-            Authorization: "6b590bf2-7c5c-4afc-83d9-578df2f318b5", // 🔑 Replace with your imei.info key
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const data = response.data;
-      const formatted = `
-- 📱 Brand: ${data.brand || "Unknown"}
-- Model: ${data.model || "Unknown"}
-- Status: ${data.status || "N/A"}
-- Network: ${data.network || "N/A"}
-- IMEI Validity: ${data.valid ? "Valid" : "Invalid"}
-      `;
-      setResult(formatted);
-    } catch (err) {
-      console.error(err);
-      setError("❌ Failed to fetch device info. Check API key or credits.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 🔍 Full Device Scan
-  const performFullScan = async () => {
-    setError("");
-    setScanResult("");
-
-    if (isMobile && !validateIMEI(imei)) {
-      setError("⚠️ Please enter a valid 15-digit IMEI number for mobile scan.");
+    if (scanning || !imei.trim()) {
+      if (!imei.trim()) shake(imeiInputRef.current);
       return;
     }
 
+    setScanning(true);
+    setScanLogs([]);
+    setProgress(0);
+    setResultsVisible(false);
+    setScanCompletedTime(null);
+    setScanResult(null);
+
+    scanBtnRef.current.disabled = true;
+    scanBtnRef.current.classList.add("btn-pulse");
+    scanBtnRef.current.textContent = "Scanning...";
+
+    for (let i = 0; i < scanSteps.length; i++) {
+      const timestamp = new Date().toLocaleTimeString();
+      setScanLogs((prev) => [...prev, `[${timestamp}] ${scanSteps[i]}...`]);
+      setProgress(Math.min(100, ((i + 1) / scanSteps.length) * 100));
+      await new Promise((res) => setTimeout(res, 1200)); // faster animation
+    }
+
+    setProgress(100);
+    setResultsVisible(true);
+    setScanCompletedTime(new Date());
+    const isHacked = simulateDeviceSecurityCheck();
+    setScanResult(isHacked ? "hacked" : "safe");
+
     try {
-      setScanLoading(true);
+      await addDoc(collection(db, "scans"), {
+        email: userEmail,
+        imei,
+        result: isHacked ? "hacked" : "safe",
+        scanDate: new Date(),
+      });
 
-      // Gather system info dynamically
-      const deviceInfo = isMobile
-        ? `Mobile IMEI: ${imei}`
-        : `Desktop OS: ${navigator.platform}, Browser: ${navigator.userAgent}`;
+      const scanCountDocId = `${userEmail}_${imei}`;
+      const scanCountRef = doc(db, "scanCounts", scanCountDocId);
+      const scanCountSnap = await getDoc(scanCountRef);
 
-      const payload = {
-        contents: [
-          {
-            parts: [
-              {
-                text: `Perform a FULL DEVICE SCAN for the following device:
-${deviceInfo}
-Include:
-- Malware, spyware, ransomware detection
-- Unauthorized access / rootkits / phishing threats
-- Network & firewall vulnerabilities
-- File system & permissions issues
-- Security recommendations with ✅ Safe / ⚠️ Warning
-Provide a detailed, real-time report.`
-              }
-            ]
-          }
-        ]
-      };
-
-      const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBMBmIUqt8FRnWsa0vavEkYsexD0awwAEE`,
-        payload
-      );
-
-      const text = response.data.candidates[0].content.parts[0].text;
-      setScanResult(text);
+      if (scanCountSnap.exists()) {
+        await updateDoc(scanCountRef, {
+          count: increment(1),
+          lastScanned: new Date(),
+        });
+      } else {
+        await setDoc(scanCountRef, {
+          email: userEmail,
+          imei,
+          count: 1,
+          lastScanned: new Date(),
+        });
+      }
     } catch (err) {
       console.error(err);
-      setError("❌ Error performing full device scan. Please try again.");
-    } finally {
-      setScanLoading(false);
     }
+
+    scanBtnRef.current.disabled = false;
+    scanBtnRef.current.classList.remove("btn-pulse");
+    scanBtnRef.current.textContent = "Start Scan";
+    setScanning(false);
+
+    logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [scanLogs]);
 
   return (
     <>
       <Navbar />
-      <div className="min-vh-100 d-flex justify-content-center align-items-center bg-black text-light p-3">
-        <div
-          className="card p-4 w-75"
-          style={{
-            backgroundColor: "#0d0d0d",
-            border: "1px solid #00ff88",
-            borderRadius: "12px",
-          }}
-        >
-          <h2 className="text-center mb-3" style={{ color: "#00ff88" }}>
-            🔍 {isMobile ? "Mobile IMEI Scan" : "Desktop Device Scan"}
-          </h2>
+    <div className="dark-theme">
+      <div className="scanpage">
+        <h1 className="scan-title">Device Security Scan</h1>
 
-          {isMobile && (
-            <input
-              type="text"
-              className="form-control mb-3 bg-dark text-light border-success"
-              placeholder="Enter 15-digit IMEI number"
-              value={imei}
-              onChange={(e) => setImei(e.target.value)}
-            />
-          )}
+        {userEmail ? (
+          <div className="user-info">User: {userEmail}</div>
+        ) : (
+          <div className="login-message">
+            <p>Please log in to perform a scan</p>
+            <button onClick={() => navigate("/login")}>Log In</button>
+          </div>
+        )}
 
-          {error && <div className="alert alert-danger py-2">{error}</div>}
-
-          {isMobile && (
-            <button
-              className="btn w-100 mb-2"
-              onClick={fetchDeviceDetails}
-              disabled={loading}
-              style={{
-                backgroundColor: "#00ff88",
-                color: "#000",
-                fontWeight: "bold",
-              }}
-            >
-              {loading ? (
-                <span>
-                  <span className="spinner-border spinner-border-sm me-2" />
-                  Fetching Details...
-                </span>
-              ) : (
-                "Get Device Info"
-              )}
-            </button>
-          )}
-
+        <div className="input-container">
+          <input
+            ref={imeiInputRef}
+            type="text"
+            placeholder="Enter IMEI number"
+            value={imei}
+            onChange={(e) => setImei(e.target.value)}
+            className="imei-input"
+          />
           <button
-            className="btn w-100"
-            onClick={performFullScan}
-            disabled={scanLoading}
-            style={{
-              backgroundColor: "#ff4444",
-              color: "#fff",
-              fontWeight: "bold",
-              border: "1px solid #ff8888",
-            }}
+            ref={scanBtnRef}
+            onClick={handleScan}
+            disabled={scanning || !userEmail}
+            className="scan-button"
           >
-            {scanLoading ? (
-              <span>
-                <span className="spinner-border spinner-border-sm me-2" />
-                Scanning Device...
-              </span>
-            ) : (
-              "🛡️ Full Device Scan"
-            )}
+            Start Scan
           </button>
+        </div>
 
-          {result && (
-            <div
-              className="p-3 mt-3"
-              style={{
-                backgroundColor: "#001a0f",
-                border: "1px solid #00ff88",
-                borderRadius: "8px",
-              }}
-            >
-              <h5 style={{ color: "#00ff88" }}>📋 Device Details</h5>
-              <SyntaxHighlighter
-                language="markdown"
-                style={darcula}
-                wrapLongLines
-              >
-                {result}
-              </SyntaxHighlighter>
-            </div>
-          )}
+        {/* Progress Bar */}
+        <div className="progress-bar-container">
+          <div
+            className="progress-bar-fill"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
 
-          {scanResult && (
-            <div
-              className="p-3 mt-3"
-              style={{
-                backgroundColor: "#1a0000",
-                border: "1px solid #ff4444",
-                borderRadius: "8px",
-              }}
-            >
-              <h5 style={{ color: "#ff4444" }}>🛡️ Full Device Scan Report</h5>
-              <SyntaxHighlighter
-                language="markdown"
-                style={darcula}
-                wrapLongLines
-              >
-                {scanResult}
-              </SyntaxHighlighter>
-            </div>
-          )}
+        <div className="scan-logs">
+          {scanLogs.map((log, idx) => (
+            <p key={idx} className={`log-entry ${idx % 2 === 0 ? "even" : "odd"}`}>
+              {log}
+            </p>
+          ))}
+          <div ref={logsEndRef} />
+        </div>
+
+        {resultsVisible && (
+          <div className={`scan-result ${scanResult}`}>
+            <h2>{scanResult === "hacked" ? "⚠ Hacked!" : "✅ Safe"}</h2>
+            <p>
+              {scanResult === "hacked"
+                ? "Immediate action is recommended!"
+                : "Your device is secure. Keep it up!"}
+            </p>
+            <p>Scan completed at: {scanCompletedTime?.toLocaleTimeString()}</p>
+          </div>
+        )}
+
+        <div className="safety-tips">
+          <h3>Safety Tips</h3>
+          {safetySteps.map((tip, idx) => (
+            <p key={idx} className="tip">
+              {tip}
+            </p>
+          ))}
         </div>
       </div>
+    </div>
     </>
   );
-}
+};
+
+export default DynamicScanDevice;

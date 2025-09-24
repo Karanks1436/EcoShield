@@ -5,16 +5,18 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 
-export default function LoginSignupCard() {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
+const API = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
-  // Login States
+export default function LoginSignupCard() {
+  const navigate = useNavigate();
+
+  // Login states
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  // Signup States
+  // Signup states
   const [signupData, setSignupData] = useState({
     name: "",
     contact: "",
@@ -28,26 +30,30 @@ export default function LoginSignupCard() {
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
 
-  const [showPassword, setShowPassword] = useState(false);
+  // Password visibility
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // Errors
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [isFlipped, setIsFlipped] = useState(false);
 
+  // ✅ Validation
   const validateSignupData = (field, value) => {
     let error = "";
     switch (field) {
       case "contact":
-        if (!/^\d{0,10}$/.test(value)) error = "Contact must contain up to 10 digits.";
+        if (!/^\d{10}$/.test(value)) error = "Contact must be 10 digits.";
         break;
       case "email":
-        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value))
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
           error = "Invalid email format.";
         break;
       case "password":
         if (
           value &&
-          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(value)
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(value)
         )
           error = "Min 8 chars, uppercase, lowercase, digit, special char required.";
         break;
@@ -60,15 +66,17 @@ export default function LoginSignupCard() {
     setErrors((prev) => ({ ...prev, [field]: error }));
   };
 
+  // ✅ OTP
   const sendOtpEmail = () => {
+    if (!signupData.email) return alert("Enter email first.");
     const generated = Math.floor(100000 + Math.random() * 900000).toString();
     setGeneratedOtp(generated);
-    const templateParams = {
-      to_email: signupData.email,
-      otp: generated,
-    };
+
     emailjs
-      .send("service_6ho576f", "template_6jt6pid", templateParams, "D6VTLhpezsMJy0o0l")
+      .send("service_6ho576f", "template_6jt6pid", {
+        to_email: signupData.email,
+        otp: generated,
+      }, "D6VTLhpezsMJy0o0l")
       .then(() => {
         alert("OTP sent to your email! Please check.");
         setOtpSent(true);
@@ -85,69 +93,125 @@ export default function LoginSignupCard() {
     }
   };
 
- const handleSignup = async (e) => {
-  e.preventDefault();
-  if (!otpVerified) return alert("Please verify OTP first.");
-  try {
-    const response = await fetch("https://eco-shield-backend.onrender.com/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(signupData),
-    });
-    const result = await response.json();
-    if (response.ok) {
-      alert("Signup successful!");
+  // ✅ Signup
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    if (!otpVerified) return alert("Please verify OTP first.");
 
-      // ✅ Save email to localStorage
-      localStorage.setItem("user", JSON.stringify({ email: signupData.email }));
+    try {
+      const response = await fetch("https://eco-shield-backend-4.onrender.com/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signupData),
+      });
+      const result = await response.json();
 
-      setLoginEmail(signupData.email);
-      setLoginPassword(signupData.password);
-      setIsFlipped(false);
-      setOtp("");
-      setOtpSent(false);
-      setOtpVerified(false);
-      setGeneratedOtp(null);
-    } else {
-      alert(result.error || "Signup failed.");
+      if (response.ok) {
+        alert("Signup successful!");
+        localStorage.setItem("user", JSON.stringify({ email: signupData.email }));
+
+        setLoginEmail(signupData.email);
+        setLoginPassword(signupData.password);
+        setIsFlipped(false);
+        setOtp("");
+        setOtpSent(false);
+        setOtpVerified(false);
+        setGeneratedOtp(null);
+      } else {
+        alert(result.error || "Signup failed.");
+      }
+    } catch {
+      alert("Server error during signup.");
     }
-  } catch (err) {
-    alert("Server error during signup.");
-  }
-};
+  };
 
-const handleLogin = async () => {
-  if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
-  try {
-    const response = await fetch("https://eco-shield-backend.onrender.com/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: loginEmail, password: loginPassword }),
-    });
-    const result = await response.json();
+  // ✅ Login
+  const handleLogin = async () => {
+    if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
 
-    if (response.ok) {
-      alert("Login successful!");
+    try {
+      const response = await fetch("https://eco-shield-backend-4.onrender.com/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+      });
+      const result = await response.json();
 
-      // ✅ Save email to localStorage
-      localStorage.setItem("user", JSON.stringify({ email: loginEmail }));
-
-      setLoggedIn(true);
-      navigate("/userhome");
-    } else {
-      alert(result.error || "Invalid credentials.");
+      if (response.ok) {
+        alert("Login successful!");
+        localStorage.setItem("user", JSON.stringify({ email: loginEmail }));
+        setLoggedIn(true);
+        navigate("/userhome");
+      } else {
+        alert(result.error || "Invalid credentials.");
+      }
+    } catch {
+      alert("Server error during login.");
     }
-  } catch {
-    alert("Server error during login.");
-  }
-};
+  };
+// ✅ Signup
+// const handleSignup = async (e) => {
+//   e.preventDefault();
+//   if (!otpVerified) return alert("Please verify OTP first.");
+
+//   try {
+//     const response = await fetch(`${API}/signup`, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(signupData),
+//     });
+//     const result = await response.json();
+
+//     if (response.ok) {
+//       alert("Signup successful!");
+//       localStorage.setItem("user", JSON.stringify({ email: signupData.email }));
+
+//       setLoginEmail(signupData.email);
+//       setLoginPassword(signupData.password);
+//       setIsFlipped(false);
+//       setOtp("");
+//       setOtpSent(false);
+//       setOtpVerified(false);
+//       setGeneratedOtp(null);
+//     } else {
+//       alert(result.error || "Signup failed.");
+//     }
+//   } catch {
+//     alert("Server error during signup.");
+//   }
+// };
+
+// // ✅ Login
+// const handleLogin = async () => {
+//   if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
+
+//   try {
+//     const response = await fetch(`${API}/login`, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+//     });
+//     const result = await response.json();
+
+//     if (response.ok) {
+//       alert("Login successful!");
+//       localStorage.setItem("user", JSON.stringify({ email: loginEmail }));
+//       setLoggedIn(true);
+//       navigate("/userhome");
+//     } else {
+//       alert(result.error || "Invalid credentials.");
+//     }
+//   } catch {
+//     alert("Server error during login.");
+//   }
+// };
 
   return (
     <div className="d-flex align-items-center justify-content-center min-vh-100 bg-black position-relative overflow-hidden">
       <div className="bg-glow"></div>
 
       <div className={`flip-card ${isFlipped ? "flipped" : ""}`}>
-        {/* Login Side */}
+        {/* ---------------- LOGIN SIDE ---------------- */}
         <div className="flip-card-front glass-card p-4 p-md-5 rounded-4 shadow-lg mx-3">
           <h2 className="text-white fw-bold text-center">Welcome Back</h2>
           <p className="text-secondary text-center small mb-4">Sign in to your account</p>
@@ -162,22 +226,21 @@ const handleLogin = async () => {
 
           <div className="position-relative">
             <input
-              type={showPassword ? "text" : "password"}
+              type={showLoginPassword ? "text" : "password"}
               className="form-control bg-dark text-light border-0 mb-3"
               placeholder="Password"
               value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)}
             />
             <span
-              onClick={() => setShowPassword((prev) => !prev)}
+              onClick={() => setShowLoginPassword((prev) => !prev)}
               className="position-absolute top-50 end-0 translate-middle-y me-3"
               style={{ cursor: "pointer", color: "#ccc" }}
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {showLoginPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
 
-          {/* Terms & Conditions */}
           <div className="form-check mb-3 text-light">
             <input
               type="checkbox"
@@ -219,28 +282,18 @@ const handleLogin = async () => {
           </p>
         </div>
 
-        {/* Signup Side */}
+        {/* ---------------- SIGNUP SIDE ---------------- */}
         <div className="flip-card-back glass-card p-4 p-md-5 rounded-4 shadow-lg mx-3">
           <h2 className="text-white fw-bold mb-2 text-center">Create Account</h2>
-          <p className="text-secondary text-center small mb-4">
-            Fill the details to sign up
-          </p>
+          <p className="text-secondary text-center small mb-4">Fill the details to sign up</p>
 
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (!otpSent) sendOtpEmail();
-              else if (otpVerified) handleSignup(e);
-            }}
-          >
+          <form onSubmit={handleSignup}>
             <input
               type="text"
               className="form-control bg-dark text-light border-0 mb-3"
               placeholder="Full Name"
               value={signupData.name}
-              onChange={(e) =>
-                setSignupData({ ...signupData, name: e.target.value })
-              }
+              onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
               required
             />
             <input
@@ -257,9 +310,7 @@ const handleLogin = async () => {
                 }
               }}
             />
-            {errors.contact && (
-              <small className="text-danger">{errors.contact}</small>
-            )}
+            {errors.contact && <small className="text-danger">{errors.contact}</small>}
 
             <input
               type="email"
@@ -273,13 +324,11 @@ const handleLogin = async () => {
               }}
               required
             />
-            {errors.email && (
-              <small className="text-danger">{errors.email}</small>
-            )}
+            {errors.email && <small className="text-danger">{errors.email}</small>}
 
             <div className="position-relative">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showSignupPassword ? "text" : "password"}
                 className="form-control bg-dark text-light border-0 mb-3"
                 placeholder="Password"
                 value={signupData.password}
@@ -291,16 +340,14 @@ const handleLogin = async () => {
                 required
               />
               <span
-                onClick={() => setShowPassword((prev) => !prev)}
+                onClick={() => setShowSignupPassword((prev) => !prev)}
                 className="position-absolute top-50 end-0 translate-middle-y me-3"
                 style={{ cursor: "pointer", color: "#ccc" }}
               >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {showSignupPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {errors.password && (
-              <small className="text-danger">{errors.password}</small>
-            )}
+            {errors.password && <small className="text-danger">{errors.password}</small>}
 
             <div className="position-relative">
               <input
@@ -331,9 +378,7 @@ const handleLogin = async () => {
               type="date"
               className="form-control bg-dark text-light border-0 mb-3"
               value={signupData.dob}
-              onChange={(e) =>
-                setSignupData({ ...signupData, dob: e.target.value })
-              }
+              onChange={(e) => setSignupData({ ...signupData, dob: e.target.value })}
               required
             />
 

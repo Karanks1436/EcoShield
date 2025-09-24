@@ -18,6 +18,8 @@ import AntivirusDemo from "./AntivirusDemo";
 import AlienLoader from "./AlienLoader";
 import ProfilePage from "./ProfilePage";
 import Termsandconditions from "./Termsandconditions";
+import ClimateWildlife from "./ClimateWildlife";
+
 function App() {
   return (
     <Router>
@@ -39,6 +41,8 @@ function App() {
         <Route path="/alien" element={<AlienLoader />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/terms" element={<Termsandconditions />} />
+        <Route path="/climate" element={<ClimateWildlife />} />
+
 
 
 
