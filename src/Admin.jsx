@@ -298,7 +298,7 @@ export default function AdminDash() {
   // Fetch all users
   const fetchUsers = async () => {
     try {
-      const res = await fetch("https://eco-shield-backend-4.onrender.com/dashboard");
+      const res = await fetch("https://eco-shield-backend-0bdn.onrender.com/dashboard");
       const data = await res.json();
       // Map backend data to expected fields
       const mapped = data.map(u => ({

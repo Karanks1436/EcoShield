@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 export default function LoginSignupCard() {
   const navigate = useNavigate();
@@ -99,7 +99,7 @@ export default function LoginSignupCard() {
     if (!otpVerified) return alert("Please verify OTP first.");
 
     try {
-      const response = await fetch("https://eco-shield-backend-4.onrender.com/signup", {
+      const response = await fetch("https://eco-shield-backend-0bdn.onrender.com/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signupData),
@@ -130,7 +130,7 @@ export default function LoginSignupCard() {
     if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
 
     try {
-      const response = await fetch("https://eco-shield-backend-4.onrender.com/login", {
+      const response = await fetch("https://eco-shield-backend-0bdn.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),

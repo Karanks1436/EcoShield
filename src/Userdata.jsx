@@ -178,14 +178,14 @@ const DynamicScanDevice = () => {
       <div className="scanpage">
         <h1 className="scan-title">Device Security Scan</h1>
 
-        {userEmail ? (
+        {/* {userEmail ? (
           <div className="user-info">User: {userEmail}</div>
         ) : (
           <div className="login-message">
             <p>Please log in to perform a scan</p>
             <button onClick={() => navigate("/login")}>Log In</button>
           </div>
-        )}
+        )} */}
 
         <div className="input-container">
           <input
