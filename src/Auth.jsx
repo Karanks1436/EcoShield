@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./Login.css";
+import "./Login.css"; // custom css for flip animation
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
+const API = "https://eco-shield-backend-0bdn.onrender.com";
 
-export default function LoginSignupCard() {
+// ✅ Safe getter for user
+const getStoredUser = () => {
+  try {
+    const data = localStorage.getItem("user");
+    return data ? JSON.parse(data) : null;
+  } catch {
+    localStorage.removeItem("user");
+    return null;
+  }
+};
+
+export default function AuthCard() {
+  const [isFlipped, setIsFlipped] = useState(false);
   const navigate = useNavigate();
 
-  // Login states
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-
   // Signup states
-  const [signupData, setSignupData] = useState({
+  const [form, setForm] = useState({
     name: "",
     contact: "",
     email: "",
@@ -25,418 +32,589 @@ export default function LoginSignupCard() {
     confirmPassword: "",
     dob: "",
   });
+
+  // Login states
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState(null);
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpStep, setOtpStep] = useState(false);
 
-  // Password visibility
-  const [showLoginPassword, setShowLoginPassword] = useState(false);
-  const [showSignupPassword, setShowSignupPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  // ✅ Terms & Conditions checkbox
+  const [agreed, setAgreed] = useState(false);
 
-  // Errors
-  const [errors, setErrors] = useState({});
-  const [isFlipped, setIsFlipped] = useState(false);
+  // ✅ Auto-redirect if already logged in
+  useEffect(() => {
+    const storedUser = getStoredUser();
+    const token = localStorage.getItem("token");
+    if (storedUser && token) {
+      navigate("/userhome");
+    }
+  }, [navigate]);
 
-  // ✅ Validation
-  const validateSignupData = (field, value) => {
+  // 🔹 Validation function
+  const validate = (name, value) => {
     let error = "";
-    switch (field) {
-      case "contact":
-        if (!/^\d{10}$/.test(value)) error = "Contact must be 10 digits.";
-        break;
+    switch (name) {
       case "email":
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
-          error = "Invalid email format.";
+        if (!/^\S+@\S+\.\S+$/.test(value)) error = "Invalid email format";
         break;
       case "password":
-        if (
-          value &&
-          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(value)
-        )
-          error = "Min 8 chars, uppercase, lowercase, digit, special char required.";
+        if (value.length < 6) error = "Password must be at least 6 characters";
         break;
       case "confirmPassword":
-        if (value !== signupData.password) error = "Passwords do not match.";
+        if (value !== form.password) error = "Passwords do not match";
+        break;
+      case "contact":
+        if (!/^\d{10}$/.test(value)) error = "Contact must be 10 digits";
         break;
       default:
         break;
     }
-    setErrors((prev) => ({ ...prev, [field]: error }));
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
-  // ✅ OTP
-  const sendOtpEmail = () => {
-    if (!signupData.email) return alert("Enter email first.");
-    const generated = Math.floor(100000 + Math.random() * 900000).toString();
-    setGeneratedOtp(generated);
-
-    emailjs
-      .send("service_6ho576f", "template_6jt6pid", {
-        to_email: signupData.email,
-        otp: generated,
-      }, "D6VTLhpezsMJy0o0l")
-      .then(() => {
-        alert("OTP sent to your email! Please check.");
-        setOtpSent(true);
-      })
-      .catch(() => alert("Failed to send OTP. Try again."));
-  };
-
-  const verifyOtp = () => {
-    if (otp === generatedOtp) {
-      alert("OTP verified successfully!");
-      setOtpVerified(true);
+  const handleChange = (e, type = "signup") => {
+    const { name, value } = e.target;
+    if (type === "signup") {
+      setForm({ ...form, [name]: value });
+      validate(name, value);
     } else {
-      alert("Incorrect OTP.");
+      setLogin({ ...login, [name]: value });
+      validate(name, value);
     }
   };
 
-  // ✅ Signup
+  // 🔹 OTP Generator
+  const generateOtp = () =>
+    Math.floor(100000 + Math.random() * 900000).toString();
+
+  // 🔹 Send OTP via EmailJS
+  const sendOtpEmail = async () => {
+    const otpValue = generateOtp();
+    setGeneratedOtp(otpValue);
+
+    const templateParams = {
+      to_name: form.name || "User",
+      to_email: form.email,
+      otp: otpValue,
+    };
+
+    try {
+      await emailjs.send(
+        "service_6ho576f",
+        "template_6jt6pid",
+        templateParams,
+        "D6VTLhpezsMJy0o0l"
+      );
+      alert("OTP sent to your email!");
+      setOtpStep(true);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      alert("Failed to send OTP");
+    }
+  };
+
+  // 🔹 Signup API after OTP verification
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (!otpVerified) return alert("Please verify OTP first.");
+    if (!otpStep) {
+      // Step 1 → send OTP
+      sendOtpEmail();
+      return;
+    }
+
+    // Step 2 → verify OTP
+    if (otp !== generatedOtp) {
+      alert("Invalid OTP");
+      return;
+    }
 
     try {
-      const response = await fetch("https://eco-shield-backend-0bdn.onrender.com/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(signupData),
-      });
-      const result = await response.json();
+      const res = await axios.post(`${API}/signup`, form);
 
-      if (response.ok) {
-        alert("Signup successful!");
-        localStorage.setItem("user", JSON.stringify({ email: signupData.email }));
-
-        setLoginEmail(signupData.email);
-        setLoginPassword(signupData.password);
-        setIsFlipped(false);
-        setOtp("");
-        setOtpSent(false);
-        setOtpVerified(false);
-        setGeneratedOtp(null);
-      } else {
-        alert(result.error || "Signup failed.");
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
       }
-    } catch {
-      alert("Server error during signup.");
+      if (res.data.user) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+      }
+
+      alert(res.data.message || "Signup successful! Please login now.");
+
+      // ✅ Auto-fill login form
+      setLogin({
+        email: form.email,
+        password: form.password,
+      });
+
+      // ✅ Reset OTP step and flip back to login
+      setOtpStep(false);
+      setIsFlipped(false);
+      setAgreed(false); // reset checkbox
+    } catch (err) {
+      alert(err.response?.data?.error || "Signup failed");
     }
   };
 
-  // ✅ Login
-  const handleLogin = async () => {
-    if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
-
+  // 🔹 Login API
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch("https://eco-shield-backend-0bdn.onrender.com/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
-      });
-      const result = await response.json();
+      const res = await axios.post(`${API}/login`, login);
 
-      if (response.ok) {
-        alert("Login successful!");
-        localStorage.setItem("user", JSON.stringify({ email: loginEmail }));
-        setLoggedIn(true);
-        navigate("/userhome");
-      } else {
-        alert(result.error || "Invalid credentials.");
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
       }
-    } catch {
-      alert("Server error during login.");
+
+      localStorage.setItem("user", JSON.stringify({ email: login.email }));
+
+      alert(res.data.message || "Login successful!");
+      navigate("/userhome");
+    } catch (err) {
+      alert(err.response?.data?.error || "Login failed");
     }
   };
-// ✅ Signup
-// const handleSignup = async (e) => {
-//   e.preventDefault();
-//   if (!otpVerified) return alert("Please verify OTP first.");
-
-//   try {
-//     const response = await fetch(`${API}/signup`, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(signupData),
-//     });
-//     const result = await response.json();
-
-//     if (response.ok) {
-//       alert("Signup successful!");
-//       localStorage.setItem("user", JSON.stringify({ email: signupData.email }));
-
-//       setLoginEmail(signupData.email);
-//       setLoginPassword(signupData.password);
-//       setIsFlipped(false);
-//       setOtp("");
-//       setOtpSent(false);
-//       setOtpVerified(false);
-//       setGeneratedOtp(null);
-//     } else {
-//       alert(result.error || "Signup failed.");
-//     }
-//   } catch {
-//     alert("Server error during signup.");
-//   }
-// };
-
-// // ✅ Login
-// const handleLogin = async () => {
-//   if (!acceptedTerms) return alert("Please accept the Terms & Conditions.");
-
-//   try {
-//     const response = await fetch(`${API}/login`, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ email: loginEmail, password: loginPassword }),
-//     });
-//     const result = await response.json();
-
-//     if (response.ok) {
-//       alert("Login successful!");
-//       localStorage.setItem("user", JSON.stringify({ email: loginEmail }));
-//       setLoggedIn(true);
-//       navigate("/userhome");
-//     } else {
-//       alert(result.error || "Invalid credentials.");
-//     }
-//   } catch {
-//     alert("Server error during login.");
-//   }
-// };
 
   return (
-    <div className="d-flex align-items-center justify-content-center min-vh-100 bg-black position-relative overflow-hidden">
-      <div className="bg-glow"></div>
-
-      <div className={`flip-card ${isFlipped ? "flipped" : ""}`}>
-        {/* ---------------- LOGIN SIDE ---------------- */}
-        <div className="flip-card-front glass-card p-4 p-md-5 rounded-4 shadow-lg mx-3">
-          <h2 className="text-white fw-bold text-center">Welcome Back</h2>
-          <p className="text-secondary text-center small mb-4">Sign in to your account</p>
-
-          <input
-            type="email"
-            className="form-control bg-dark text-light border-0 mb-3"
-            placeholder="username@gmail.com"
-            value={loginEmail}
-            onChange={(e) => setLoginEmail(e.target.value)}
-          />
-
-          <div className="position-relative">
+    <div className="auth-container">
+      <div className={`auth-card ${isFlipped ? "flipped" : ""}`}>
+        {/* 🔹 Front Side - Login */}
+        <div className="auth-front">
+          <h2>Login</h2>
+          <form onSubmit={handleLogin}>
             <input
-              type={showLoginPassword ? "text" : "password"}
-              className="form-control bg-dark text-light border-0 mb-3"
-              placeholder="Password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={login.email}
+              onChange={(e) => handleChange(e, "login")}
+              required
             />
-            <span
-              onClick={() => setShowLoginPassword((prev) => !prev)}
-              className="position-absolute top-50 end-0 translate-middle-y me-3"
-              style={{ cursor: "pointer", color: "#ccc" }}
-            >
-              {showLoginPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
+            {errors.email && <p className="error">{errors.email}</p>}
 
-          <div className="form-check mb-3 text-light">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="termsCheck"
-              checked={acceptedTerms}
-              onChange={() => setAcceptedTerms(!acceptedTerms)}
-            />
-            <label className="form-check-label small" htmlFor="termsCheck">
-              I agree to the{" "}
-              <a
-                href="/terms"
-                className="text-decoration-underline text-success"
-                target="_blank"
-                rel="noopener noreferrer"
+            <div className="password-field">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={login.password}
+                onChange={(e) => handleChange(e, "login")}
+                required
+              />
+              <span
+                className="toggle"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                Terms & Conditions
-              </a>
-            </label>
-          </div>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+            {errors.password && <p className="error">{errors.password}</p>}
 
-          <button
-            className="btn btn-success w-100 fw-bold mb-3"
-            style={{ borderRadius: "12px" }}
-            onClick={handleLogin}
-            disabled={!acceptedTerms}
-          >
-            Login
-          </button>
-
-          <p className="text-center text-secondary small mt-4">
+            <button type="submit">Login</button>
+          </form>
+          <p>
             Don’t have an account?{" "}
-            <button
-              onClick={() => setIsFlipped(true)}
-              className="btn btn-link text-success fw-semibold text-decoration-none p-0"
-            >
+            <span className="flip-btn" onClick={() => setIsFlipped(true)}>
               Sign up
-            </button>
+            </span>
           </p>
         </div>
 
-        {/* ---------------- SIGNUP SIDE ---------------- */}
-        <div className="flip-card-back glass-card p-4 p-md-5 rounded-4 shadow-lg mx-3">
-          <h2 className="text-white fw-bold mb-2 text-center">Create Account</h2>
-          <p className="text-secondary text-center small mb-4">Fill the details to sign up</p>
-
+        {/* 🔹 Back Side - Signup */}
+        <div className="auth-back">
+          <h2>Sign Up</h2>
           <form onSubmit={handleSignup}>
-            <input
-              type="text"
-              className="form-control bg-dark text-light border-0 mb-3"
-              placeholder="Full Name"
-              value={signupData.name}
-              onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
-              required
-            />
-            <input
-              type="text"
-              className="form-control bg-dark text-light border-0 mb-3"
-              placeholder="Contact (10 digits)"
-              value={signupData.contact}
-              maxLength="10"
-              onChange={(e) => {
-                const value = e.target.value;
-                if (/^\d*$/.test(value) && value.length <= 10) {
-                  setSignupData({ ...signupData, contact: value });
-                  validateSignupData("contact", value);
-                }
-              }}
-            />
-            {errors.contact && <small className="text-danger">{errors.contact}</small>}
-
-            <input
-              type="email"
-              className="form-control bg-dark text-light border-0 mb-3"
-              placeholder="Email"
-              value={signupData.email}
-              onChange={(e) => {
-                const value = e.target.value;
-                setSignupData({ ...signupData, email: value });
-                validateSignupData("email", value);
-              }}
-              required
-            />
-            {errors.email && <small className="text-danger">{errors.email}</small>}
-
-            <div className="position-relative">
-              <input
-                type={showSignupPassword ? "text" : "password"}
-                className="form-control bg-dark text-light border-0 mb-3"
-                placeholder="Password"
-                value={signupData.password}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setSignupData({ ...signupData, password: value });
-                  validateSignupData("password", value);
-                }}
-                required
-              />
-              <span
-                onClick={() => setShowSignupPassword((prev) => !prev)}
-                className="position-absolute top-50 end-0 translate-middle-y me-3"
-                style={{ cursor: "pointer", color: "#ccc" }}
-              >
-                {showSignupPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-            {errors.password && <small className="text-danger">{errors.password}</small>}
-
-            <div className="position-relative">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                className="form-control bg-dark text-light border-0 mb-3"
-                placeholder="Confirm Password"
-                value={signupData.confirmPassword}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setSignupData({ ...signupData, confirmPassword: value });
-                  validateSignupData("confirmPassword", value);
-                }}
-                required
-              />
-              <span
-                onClick={() => setShowConfirmPassword((prev) => !prev)}
-                className="position-absolute top-50 end-0 translate-middle-y me-3"
-                style={{ cursor: "pointer", color: "#ccc" }}
-              >
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-            {errors.confirmPassword && (
-              <small className="text-danger">{errors.confirmPassword}</small>
-            )}
-
-            <input
-              type="date"
-              className="form-control bg-dark text-light border-0 mb-3"
-              value={signupData.dob}
-              onChange={(e) => setSignupData({ ...signupData, dob: e.target.value })}
-              required
-            />
-
-            {!otpSent && (
-              <button
-                type="button"
-                className="btn btn-primary w-100 fw-semibold"
-                style={{ borderRadius: "12px" }}
-                onClick={sendOtpEmail}
-              >
-                Send OTP
-              </button>
-            )}
-
-            {otpSent && !otpVerified && (
+            {!otpStep ? (
               <>
                 <input
                   type="text"
-                  className="form-control bg-dark text-light border-0 mb-3 mt-3"
+                  name="name"
+                  placeholder="Full Name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+
+                <input
+                  type="text"
+                  name="contact"
+                  placeholder="Contact (10 digits)"
+                  value={form.contact}
+                  onChange={handleChange}
+                  maxLength={10}
+                  required
+                />
+                {errors.contact && <p className="error">{errors.contact}</p>}
+
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.email && <p className="error">{errors.email}</p>}
+
+                <input
+                  type="date"
+                  name="dob"
+                  value={form.dob}
+                  onChange={handleChange}
+                  required
+                />
+
+                <div className="password-field">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span
+                    className="toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </span>
+                </div>
+                {errors.password && <p className="error">{errors.password}</p>}
+
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  required
+                />
+                {errors.confirmPassword && (
+                  <p className="error">{errors.confirmPassword}</p>
+                )}
+
+                {/* ✅ Terms & Conditions Checkbox */}
+                <div className="terms-checkbox">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                  />
+                  <label htmlFor="terms">
+                    I agree to the <a href="/terms" className="text-primary">Terms & Conditions</a>
+                  </label>
+                </div>
+
+                <button type="submit" disabled={!agreed}>
+                  Send OTP
+                </button>
+              </>
+            ) : (
+              <>
+                <input
+                  type="text"
                   placeholder="Enter OTP"
                   value={otp}
-                  maxLength="6"
                   onChange={(e) => setOtp(e.target.value)}
                   required
                 />
-                <button
-                  type="button"
-                  className="btn btn-warning w-100 fw-semibold"
-                  style={{ borderRadius: "12px" }}
-                  onClick={verifyOtp}
-                >
-                  Verify OTP
-                </button>
+                <button type="submit">Verify & Sign Up</button>
               </>
             )}
-
-            {otpVerified && (
-              <button
-                type="submit"
-                className="btn btn-success w-100 fw-semibold mt-3"
-                style={{ borderRadius: "12px" }}
-              >
-                Complete Signup
-              </button>
-            )}
           </form>
-
-          <p className="text-center text-secondary small mt-4">
+          <p>
             Already have an account?{" "}
-            <button
-              onClick={() => setIsFlipped(false)}
-              className="btn btn-link text-info fw-semibold text-decoration-none p-0"
-            >
+            <span className="flip-btn" onClick={() => setIsFlipped(false)}>
               Login
-            </button>
+            </span>
           </p>
         </div>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from "react";
+// import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+// import { useNavigate } from "react-router-dom";
+// import emailjs from "emailjs-com";
+// import "./Login.css";
+
+// import { auth, db } from "./firebase"; 
+// import { 
+//   createUserWithEmailAndPassword, 
+//   signInWithEmailAndPassword, 
+//   GoogleAuthProvider, 
+//   signInWithPopup 
+// } from "firebase/auth";
+// import { doc, setDoc, getDoc } from "firebase/firestore";
+
+// // ✅ Safe getter for user
+// const getStoredUser = () => {
+//   try {
+//     const data = localStorage.getItem("user");
+//     return data ? JSON.parse(data) : null;
+//   } catch {
+//     localStorage.removeItem("user");
+//     return null;
+//   }
+// };
+
+// export default function AuthCard() {
+//   const [isFlipped, setIsFlipped] = useState(false);
+//   const navigate = useNavigate();
+
+//   const [form, setForm] = useState({
+//     name: "",
+//     contact: "",
+//     email: "",
+//     password: "",
+//     confirmPassword: "",
+//     dob: "",
+//   });
+
+//   const [login, setLogin] = useState({ email: "", password: "" });
+//   const [errors, setErrors] = useState({});
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [otp, setOtp] = useState("");
+//   const [generatedOtp, setGeneratedOtp] = useState(null);
+//   const [otpStep, setOtpStep] = useState(false);
+//   const [agreed, setAgreed] = useState(false);
+
+//   useEffect(() => {
+//     const storedUser = getStoredUser();
+//     if (storedUser) navigate("/userhome");
+//   }, [navigate]);
+
+//   const validate = (name, value) => {
+//     let error = "";
+//     switch (name) {
+//       case "email":
+//         if (!/^\S+@\S+\.\S+$/.test(value)) error = "Invalid email format";
+//         break;
+//       case "password":
+//         if (value.length < 6) error = "Password must be at least 6 characters";
+//         break;
+//       case "confirmPassword":
+//         if (value !== form.password) error = "Passwords do not match";
+//         break;
+//       case "contact":
+//         if (!/^\d{10}$/.test(value)) error = "Contact must be 10 digits";
+//         break;
+//       default:
+//         break;
+//     }
+//     setErrors((prev) => ({ ...prev, [name]: error }));
+//   };
+
+//   const handleChange = (e, type = "signup") => {
+//     const { name, value } = e.target;
+//     if (type === "signup") {
+//       setForm({ ...form, [name]: value });
+//       validate(name, value);
+//     } else {
+//       setLogin({ ...login, [name]: value });
+//       validate(name, value);
+//     }
+//   };
+
+//   const generateOtp = () =>
+//     Math.floor(100000 + Math.random() * 900000).toString();
+
+//   const sendOtpEmail = async () => {
+//     const otpValue = generateOtp();
+//     setGeneratedOtp(otpValue);
+
+//     const templateParams = {
+//       to_name: form.name || "User",
+//       to_email: form.email,
+//       otp: otpValue,
+//     };
+
+//     try {
+//       await emailjs.send(
+//         "service_6ho576f",
+//         "template_6jt6pid",
+//         templateParams,
+//         "D6VTLhpezsMJy0o0l"
+//       );
+//       alert("OTP sent to your email!");
+//       setOtpStep(true);
+//     } catch (error) {
+//       console.error("EmailJS Error:", error);
+//       alert("Failed to send OTP");
+//     }
+//   };
+
+//   const handleSignup = async (e) => {
+//     e.preventDefault();
+//     if (!otpStep) {
+//       sendOtpEmail();
+//       return;
+//     }
+//     if (otp !== generatedOtp) {
+//       alert("Invalid OTP");
+//       return;
+//     }
+
+//     try {
+//       const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
+//       const user = userCredential.user;
+
+//       await setDoc(doc(db, "Users", user.uid), {
+//         name: form.name,
+//         contact: form.contact,
+//         email: form.email,
+//         dob: form.dob,
+//         createdAt: new Date().toISOString()
+//       });
+
+//       localStorage.setItem("user", JSON.stringify({ uid: user.uid, email: user.email }));
+//       alert("Signup successful!");
+//       setOtpStep(false);
+//       setIsFlipped(false);
+//       setAgreed(false);
+//       setLogin({ email: form.email, password: form.password });
+//     } catch (err) {
+//       if (err.code === "auth/email-already-in-use") {
+//         alert("This email is already registered. Please login instead.");
+//         setIsFlipped(false);
+//       } else {
+//         console.error(err);
+//         alert(err.message || "Signup failed");
+//       }
+//     }
+//   };
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const userCredential = await signInWithEmailAndPassword(auth, login.email, login.password);
+//       const user = userCredential.user;
+//       const userDoc = await getDoc(doc(db, "Users", user.uid));
+//       const userData = userDoc.exists() ? userDoc.data() : { email: user.email };
+//       localStorage.setItem("user", JSON.stringify({ uid: user.uid, ...userData }));
+//       alert("Login successful!");
+//       navigate("/userhome");
+//     } catch (err) {
+//       console.error(err);
+//       alert(err.message || "Login failed");
+//     }
+//   };
+
+//   // 🔹 Google Login
+//   const handleGoogleLogin = async () => {
+//     const provider = new GoogleAuthProvider();
+//     try {
+//       const result = await signInWithPopup(auth, provider);
+//       const user = result.user;
+
+//       // Check if user already exists in Firestore
+//       const userRef = doc(db, "Users", user.uid);
+//       const userDoc = await getDoc(userRef);
+
+//       if (!userDoc.exists()) {
+//         await setDoc(userRef, {
+//           name: user.displayName || "",
+//           email: user.email,
+//           contact: "",
+//           dob: "",
+//           createdAt: new Date().toISOString()
+//         });
+//       }
+
+//       localStorage.setItem("user", JSON.stringify({
+//         uid: user.uid,
+//         name: user.displayName,
+//         email: user.email
+//       }));
+
+//       alert("Google login successful!");
+//       navigate("/userhome");
+//     } catch (err) {
+//       console.error(err);
+//       alert(err.message || "Google login failed");
+//     }
+//   };
+
+//   return (
+//     <div className="auth-container">
+//       <div className={`auth-card ${isFlipped ? "flipped" : ""}`}>
+//         {/* Front Side - Login */}
+//         <div className="auth-front">
+//           <h2>Login</h2>
+//           <form onSubmit={handleLogin}>
+//             <input type="email" name="email" placeholder="Email" value={login.email} onChange={(e) => handleChange(e, "login")} required />
+//             {errors.email && <p className="error">{errors.email}</p>}
+//             <div className="password-field">
+//               <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={login.password} onChange={(e) => handleChange(e, "login")} required />
+//               <span className="toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
+//             </div>
+//             {errors.password && <p className="error">{errors.password}</p>}
+//             <button type="submit">Login</button>
+//           </form>
+
+//           <button className="google-login-btn" onClick={handleGoogleLogin}>
+//             <FaGoogle /> Sign in with Google
+//           </button>
+
+//           <p>Don’t have an account? <span className="flip-btn" onClick={() => setIsFlipped(true)}>Sign up</span></p>
+//         </div>
+
+//         {/* Back Side - Signup */}
+//         <div className="auth-back">
+//           <h2>Sign Up</h2>
+//           <form onSubmit={handleSignup}>
+//             {!otpStep ? (
+//               <>
+//                 <input type="text" name="name" placeholder="Full Name" value={form.name} onChange={handleChange} required />
+//                 <input type="text" name="contact" placeholder="Contact (10 digits)" value={form.contact} onChange={handleChange} maxLength={10} required />
+//                 {errors.contact && <p className="error">{errors.contact}</p>}
+//                 <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
+//                 {errors.email && <p className="error">{errors.email}</p>}
+//                 <input type="date" name="dob" value={form.dob} onChange={handleChange} required />
+//                 <div className="password-field">
+//                   <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={form.password} onChange={handleChange} required />
+//                   <span className="toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
+//                 </div>
+//                 {errors.password && <p className="error">{errors.password}</p>}
+//                 <input type="password" name="confirmPassword" placeholder="Confirm Password" value={form.confirmPassword} onChange={handleChange} required />
+//                 {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+
+//                 <div className="terms-checkbox">
+//                   <input type="checkbox" id="terms" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
+//                   <label htmlFor="terms">I agree to the <a href="/terms" className="text-primary">Terms & Conditions</a></label>
+//                 </div>
+
+//                 <button type="submit" disabled={!agreed}>Send OTP</button>
+//               </>
+//             ) : (
+//               <>
+//                 <input type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} required />
+//                 <button type="submit">Verify & Sign Up</button>
+//               </>
+//             )}
+//           </form>
+
+//           <p>Already have an account? <span className="flip-btn" onClick={() => setIsFlipped(false)}>Login</span></p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+

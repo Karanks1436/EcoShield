@@ -1,242 +1,224 @@
-.flip-card {
-  perspective: 1000px;
+/* ====== Container ====== */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  perspective: 1200px;
+  background: radial-gradient(circle at top left, #0a0f1a, #0e121c);
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* ====== Card ====== */
+.auth-card {
   width: 100%;
   max-width: 400px;
+  height: auto;
+  min-height: 520px;
   position: relative;
-  margin: 0 auto; /* center it horizontally */
-}
-
-.flip-card-front,
-.flip-card-back {
-  width: 100%;
-  backface-visibility: hidden;
   transform-style: preserve-3d;
   transition: transform 0.8s ease-in-out;
-  background: rgba(20, 20, 20, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 1rem;
-  color: white;
-  padding-top: 1.5rem !important; /* reduce extra space at the top */
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 255, 200, 0.2);
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.flip-card-front {
-  z-index: 2;
-  transform: rotateY(0deg);
-}
-
-.flip-card-back {
+/* Flip effect */
+.auth-card.flipped {
   transform: rotateY(180deg);
 }
 
-.flip-card.flipped .flip-card-front {
-  transform: rotateY(-180deg);
-}
-
-.flip-card.flipped .flip-card-back {
-  transform: rotateY(0deg);
-}
-
-.social-btn {
-  background-color: rgba(30, 30, 30, 0.9) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 12px !important;
-  color: lightgray !important;
-  transition: all 0.3s ease;
-}
-
-.social-btn:hover {
-  background-color: #1f1f1f !important;
-}
-
-/* ✅ Fix placeholder color */
-.form-control::placeholder {
-  color: rgba(200, 200, 200, 0.7) !important;
-  opacity: 1 !important; /* ensure consistent color */
-}
-/* Remove extra top margin inside the card */
-.flip-card-front,
-.flip-card-back {
-  margin-top: 0 !important;
-  padding-top: 1.5rem !important; /* smaller top padding */
-}
-
-/* Adjust placeholder color */
-.form-control::placeholder {
-  color: rgba(200, 200, 200, 0.7) !important;
-  opacity: 1 !important;
-}
-/* Ensure flip card always matches tallest side */
-.flip-card {
-  perspective: 1000px;
-  width: 100%;
-  max-width: 400px;
-  position: relative;
-  margin: 0 auto;
-  height: 600px; /* lock height (adjust as needed) */
-}
-
-/* Make both sides fill container */
-.flip-card-front,
-.flip-card-back {
-  height: 100%;
-  overflow-y: auto; /* allow inner scroll if content exceeds */
-}
-/* === Body & Page Background === */
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #000;
-  color: #fff;
-}
-
-/* === Container === */
-.d-flex.min-vh-100 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-/* === Binary / Matrix Overlay === */
-.d-flex.min-vh-100::before {
-  content: "";
+/* ====== Front & Back ====== */
+.auth-front,
+.auth-back {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-image: url('https://img.freepik.com/premium-vector/closed-padlock-digital-background-black-cyber-security_42077-4581.jpg');
-  background-size: cover;
-  opacity: 0.08; /* subtle overlay */
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* === Flip Card Wrapper === */
-.flip-card {
-  perspective: 1000px;
-  width: 400px;
-  height: 500px;
-  z-index: 1;
-  position: relative;
-}
-
-/* === Card Sides === */
-.flip-card-front,
-.flip-card-back {
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+  padding: 50px 30px;
   backface-visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(25, 25, 25, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2rem;
-  box-sizing: border-box;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: transform 0.8s ease-in-out;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 255, 200, 0.3);
+  box-shadow: 0 8px 40px rgba(0, 255, 200, 0.2);
+  color: #fff;
+  transition: all 0.5s ease;
 }
 
-/* === Front / Back Flip === */
-.flip-card-front {
-  transform: rotateY(0deg);
-}
-.flip-card-back {
+.auth-back {
   transform: rotateY(180deg);
 }
-.flip-card.flipped .flip-card-front {
-  transform: rotateY(-180deg);
-}
-.flip-card.flipped .flip-card-back {
-  transform: rotateY(0deg);
-}
 
-/* === Input Fields === */
-.form-control {
-  background-color: #111 !important;
-  border: 1px solid #333 !important;
-  color: #eee !important;
-  padding: 0.75rem 1rem !important;
-  margin-bottom: 1rem !important;
-  border-radius: 6px !important;
-}
-.form-control:focus {
-  outline: none !important;
-  border-color: #00f7ff !important;
-  box-shadow: 0 0 8px rgba(0, 247, 255, 0.5) !important;
-}
-
-/* === Buttons === */
-.btn-success {
-  background-color: #00f7ff !important;
-  border: none !important;
-  color: #000 !important;
-  font-weight: 600;
-  margin-top: 0.5rem;
-}
-.btn-success:hover {
-  background-color: #00d6cc !important;
-  color: #000 !important;
-}
-
-.btn-primary {
-  background-color: #005aff !important;
-  border: none !important;
-  color: #fff !important;
-}
-.btn-primary:hover {
-  background-color: #0040cc !important;
-}
-
-.btn-warning {
-  background-color: #ff9900 !important;
-  border: none !important;
-  color: #000 !important;
-}
-.btn-warning:hover {
-  background-color: #e67e00 !important;
-}
-
-/* === Links === */
-.btn-link {
-  color: #00f7ff !important;
-  text-decoration: none !important;
-}
-.btn-link:hover {
-  color: #00d6cc !important;
-  text-decoration: underline !important;
-}
-
-/* === Card Shadow & Glow === */
-.flip-card-front,
-.flip-card-back {
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-}
-
-/* === Typography === */
+/* ====== Titles ====== */
 h2 {
-  color: #00f7ff;
   text-align: center;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #00ffc3;
+  text-shadow: 0 0 12px #00ffc3;
+  letter-spacing: 1px;
 }
+
+/* ====== Inputs ====== */
+input {
+  width: 100%;
+  padding: 16px;
+  margin: 12px 0;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 255, 200, 0.4);
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #00ffc3;
+  box-shadow: 0 0 18px rgba(0, 255, 200, 0.5);
+}
+
+/* ====== Buttons ====== */
+button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(45deg, #00ffc3, #00ffa0);
+  color: #000;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:disabled {
+  background: rgba(0, 255, 200, 0.2);
+  cursor: not-allowed;
+  color: #555;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0, 255, 200, 0.5);
+}
+
+/* ====== Links ====== */
 p {
   text-align: center;
   color: #aaa;
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
+  font-size: 14px;
+  margin-top: 18px;
+  line-height: 1.5;
 }
 
-/* === Adjust OTP Inputs / spacing === */
-.flip-card-back input.form-control {
-  margin-bottom: 0.75rem !important;
+p .flip-btn {
+  color: #00ffc3;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+p .flip-btn:hover {
+  text-decoration: underline;
+  color: #00ffa0;
+}
+
+/* ====== Password Toggle ====== */
+.password-field {
+  position: relative;
+}
+
+.password-field .toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #00ffc3;
+  transition: color 0.3s ease;
+}
+
+.password-field .toggle:hover {
+  color: #00ffa0;
+}
+
+/* ====== Error Messages ====== */
+.error {
+  color: #ff5555;
+  font-size: 13px;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+
+/* ====== Terms & Conditions ====== */
+.terms-checkbox {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  font-size: 14px;
+  color: #aaa;
+  flex-wrap: wrap;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  accent-color: #00ffc3;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.terms-checkbox a {
+  color: #00ffc3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.terms-checkbox a:hover {
+  color: #00ffa0;
+  text-decoration: underline;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 500px) {
+  .auth-card {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .auth-front,
+  .auth-back {
+    padding: 40px 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  input, button {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  p {
+    font-size: 13px;
+  }
+
+  .terms-checkbox {
+    font-size: 13px;
+  }
 }
