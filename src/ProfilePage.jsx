@@ -135,7 +135,7 @@ export default function ProfilePage() {
             textAlign: "center",
             marginBottom: "2rem",
             fontSize: "2rem",
-            color: "#00ff99",
+            color: "green",
           }}
         >
           Profile
@@ -215,7 +215,7 @@ export default function ProfilePage() {
           <button
             type="submit"
             disabled={loading}
-            style={{ ...otpButtonStyle, background: "#00cc88", marginTop: "1rem", opacity: loading ? 0.7 : 1 }}
+            style={{ ...otpButtonStyle, background: "#000000ff",color:"white", marginTop: "1rem", opacity: loading ? 0.7 : 1 }}
           >
             {loading ? "Updating..." : "Update Profile"}
           </button>
@@ -230,8 +230,8 @@ export default function ProfilePage() {
         input::placeholder { color: #777; }
         input:focus {
           outline: none;
-          border-color: #00ff99;
-          box-shadow: 0 0 8px #00ff99;
+          border-color: green;
+          box-shadow: 0 0 8px green;
         }
         button:hover { opacity: 0.9; }
       `}</style>
@@ -253,7 +253,7 @@ const otpButtonStyle = {
   flex: 1,
   padding: "0.65rem",
   borderRadius: "10px",
-  background: "#00ff99",
+  background: "green",
   color: "#111",
   fontWeight: "bold",
   border: "none",
