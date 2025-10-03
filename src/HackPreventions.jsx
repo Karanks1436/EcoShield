@@ -142,8 +142,8 @@ export default function HackPreventions() {
   return (
   <>
   <Navbar/>
-    <div className="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center bg-black text-success p-4">
-      <h1 className="display-4 fw-bold mb-5 text-success text-uppercase border-bottom border-success pb-2">
+    <div className="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center bg-black txtgreen p-4">
+      <h1 className="display-4 fw-bold mb-5 txtgreen text-uppercase border-bottom border-dark pb-2">
         Hack Preventions
       </h1>
 
@@ -151,12 +151,12 @@ export default function HackPreventions() {
         {tips.map((tip, i) => (
           <div className="col-6 col-md-4 col-lg-3" key={i}>
             <div
-              className="card bg-black border-success h-100 text-center shadow-lg prevention-card"
+              className="card bg-black border-dark h-100 text-center shadow-lg prevention-card"
               onClick={() => handleShow(tip)}
               style={{ cursor: "pointer" }}
             >
               <div className="card-body d-flex flex-column align-items-center">
-                <div className="text-success mb-3">{tip.icon}</div>
+                <div className="txtgreen mb-3">{tip.icon}</div>
                 <h5 className="card-title fw-bold text-light">{tip.title}</h5>
               </div>
             </div>
@@ -166,7 +166,7 @@ export default function HackPreventions() {
 
       {/* Bootstrap Modal */}
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton className="bg-black text-success">
+        <Modal.Header closeButton className="bg-black txtgreen">
           <Modal.Title>{selectedTip?.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-black text-light">

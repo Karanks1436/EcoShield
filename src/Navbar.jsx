@@ -39,7 +39,7 @@ export default function Navbar() {
   margin: 1rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* subtle shadow */
   color: #222; /* dark text for contrast */
-  position: sticky;
+  position: relative;
   top: 10px;
   z-index: 1000;
   flex-wrap: wrap;
@@ -176,7 +176,7 @@ export default function Navbar() {
 
         .dropdown-menu a:hover, .dropdown-menu button:hover {
           background: rgb(220,245,255);
-          color: rgb(0,102,204);
+          color: rgba(0, 204, 37, 1);
         }
           .dropdown-menu2 a:hover, .dropdown-menu2 button:hover {
           background: rgba(255, 255, 255, 1);
@@ -190,7 +190,7 @@ export default function Navbar() {
         }
 
         .btn-logout {
-          background: rgb(220,53,69);
+          background: red;
           border: none;
           color: white;
           font-weight: bold;
@@ -214,7 +214,7 @@ export default function Navbar() {
         .hamburger span {
           width: 25px;
           height: 3px;
-          background: rgb(33,33,33);
+          background: rgba(255, 255, 255, 1);
           border-radius: 2px;
         }
 

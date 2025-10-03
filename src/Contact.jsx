@@ -7,7 +7,7 @@ export default function Contact() {
     <div id="contact" className="contact-page py-5 position-relative">
       {/* Title */}
       <motion.h1
-        className="text-neon mb-5 text-center"
+        className="txtgreen mb-5 text-center"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -29,24 +29,24 @@ export default function Contact() {
                 type="text"
                 className="form-control mb-3"
                 placeholder="Name"
-                whileFocus={{ scale: 1.02, borderColor: "#00ff88" }}
+                whileFocus={{ scale: 1.02, borderColor: "green" }}
               />
               <motion.input
                 type="email"
                 className="form-control mb-3"
                 placeholder="Email"
-                whileFocus={{ scale: 1.02, borderColor: "#00ff88" }}
+                whileFocus={{ scale: 1.02, borderColor: "green" }}
               />
               <motion.textarea
                 className="form-control mb-3"
                 rows="4"
                 placeholder="Message"
-                whileFocus={{ scale: 1.02, borderColor: "#00ff88" }}
+                whileFocus={{ scale: 1.02, borderColor: "green" }}
               />
               <motion.a
   href="mailto:Eco.shield.0001@gmail.com"   // opens email client
-  className="btn btn-neon w-100 text-center text-secondary d-block"
-  whileHover={{ scale: 1.05, boxShadow: "0 0 20px #00ff88" }}
+  className="btn btn-neon border-secondary w-100 text-center text-secondary d-block"
+  whileHover={{ scale: 1.05, boxShadow: "0 0 20px green" }}
   whileTap={{ scale: 0.95 }}
 >
   SEND
@@ -64,13 +64,13 @@ export default function Contact() {
           >
             <div className="glass-card p-4 rounded-4 shadow-lg">
               <h4 className="text-light mb-3">Contact Info</h4>
-              <p className="text-success">
+              <p className="txtgreen fw-bold">
                 <i className="bi bi-telephone text-neon me-2"></i> +91 9041429065
               </p>
-              <p className="text-success">
+              <p className="txtgreen fw-bold">
                 <i className="bi bi-envelope text-neon me-2"></i> Eco.shield.0001@gmail.com
               </p>
-              <p className="text-success">
+              <p className="txtgreen fw-bold">
                 <i className="bi bi-geo-alt text-neon me-2"></i> Bathinda, Punjab, India
               </p>
             </div>

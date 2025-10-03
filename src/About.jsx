@@ -75,7 +75,7 @@ export default function About() {
           <div className="about-content-box">
             <p className="intro-line">HELLO, I AM {biodata.namea}</p>
             <h1>
-              I'M A <span className="text-primary">WEB DEVELOPER</span>
+              I'M A <span className="txtgreen">WEB DEVELOPER</span>
             </h1>
             <p className="subtitle">
               I love working with SQL, API's, and databases and always curious about how data moves and connects. Beyond the Backend I'm also exploring AI-thinking about how human thoughts can be translated into intelligent system. I enjoy experimenting, building projects, and finding creative ways to make tech feel smarter and smoother.
@@ -110,7 +110,7 @@ export default function About() {
         <div className="about-content-box">
           <p className="intro-line">HELLO, I AM {biodata.namek}</p>
           <h1>
-            I'M A <span className="text-primary">FULL STACK WEB DEVELOPER</span>
+            I'M A <span className="txtgreen">FULL STACK WEB DEVELOPER</span>
           </h1>
           <p className="subtitle">
             Passionate about crafting clean, efficient, and scalable code, I am
@@ -150,7 +150,7 @@ export default function About() {
           <div className="about-content-box">
             <p className="intro-line">HELLO, I AM {biodata.names}</p>
             <h1>
-              I'M A <span className="text-primary">CREATIVE CODER</span>
+              I'M A <span className="txtgreen">CREATIVE CODER</span>
             </h1>
             <p className="subtitle">
               I am a Creative Coder on a Journey of Discovery a passionate and
@@ -193,7 +193,7 @@ export default function About() {
         <div className="about-content-box ">
           <p className="intro-line">HELLO, I AM {biodata.namet}</p>
           <h1>
-            I'M A <span className="text-primary">UI/UX DESIGNER</span>
+            I'M A <span className="txtgreen">UI/UX DESIGNER</span>
           </h1>
           <p className="subtitle">
             I focus on every stage of the design process — from wireframing and
@@ -233,7 +233,7 @@ export default function About() {
           <div className="about-content-box">
             <p className="intro-line">HELLO, I AM {biodata.namey}</p>
             <h1>
-              I'M A <span className="text-primary">GRAPHIC DESIGNER</span>
+              I'M A <span className="txtgreen">GRAPHIC DESIGNER</span>
             </h1>
             <p className="subtitle">
               Driven by creativity and a keen eye for detail, I specialize in

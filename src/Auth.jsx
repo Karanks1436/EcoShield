@@ -188,7 +188,7 @@ export default function AuthCard() {
         <div className="auth-front">
           <h2>Login</h2>
           <form onSubmit={handleLogin}>
-            <input
+            <input className="my-1"
               type="email"
               name="email"
               placeholder="Email"
@@ -199,7 +199,7 @@ export default function AuthCard() {
             {errors.email && <p className="error">{errors.email}</p>}
 
             <div className="password-field">
-              <input
+              <input className="my-1"
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Password"
@@ -216,7 +216,7 @@ export default function AuthCard() {
             </div>
             {errors.password && <p className="error">{errors.password}</p>}
 
-            <button type="submit">Login</button>
+            <button type="submit" className="rounded-4">Login</button>
           </form>
           <p>
             Don’t have an account?{" "}
@@ -232,7 +232,7 @@ export default function AuthCard() {
           <form onSubmit={handleSignup}>
             {!otpStep ? (
               <>
-                <input
+                <input className="my-1"
                   type="text"
                   name="name"
                   placeholder="Full Name"
@@ -241,7 +241,7 @@ export default function AuthCard() {
                   required
                 />
 
-                <input
+                <input className="my-1"
                   type="text"
                   name="contact"
                   placeholder="Contact (10 digits)"
@@ -252,7 +252,7 @@ export default function AuthCard() {
                 />
                 {errors.contact && <p className="error">{errors.contact}</p>}
 
-                <input
+                <input className="my-1"
                   type="email"
                   name="email"
                   placeholder="Email"
@@ -262,7 +262,7 @@ export default function AuthCard() {
                 />
                 {errors.email && <p className="error">{errors.email}</p>}
 
-                <input
+                <input className="my-1"
                   type="date"
                   name="dob"
                   value={form.dob}
@@ -271,7 +271,7 @@ export default function AuthCard() {
                 />
 
                 <div className="password-field">
-                  <input
+                  <input className="my-1"
                     type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Password"
@@ -288,7 +288,7 @@ export default function AuthCard() {
                 </div>
                 {errors.password && <p className="error">{errors.password}</p>}
 
-                <input
+                <input className="my-1"
                   type="password"
                   name="confirmPassword"
                   placeholder="Confirm Password"
@@ -302,7 +302,7 @@ export default function AuthCard() {
 
                 {/* ✅ Terms & Conditions Checkbox */}
                 <div className="terms-checkbox">
-                  <input
+                  <input className="my-1"
                     type="checkbox"
                     id="terms"
                     checked={agreed}
@@ -313,13 +313,13 @@ export default function AuthCard() {
                   </label>
                 </div>
 
-                <button type="submit" disabled={!agreed}>
+                <button type="submit" className="rounded-4" disabled={!agreed}>
                   Send OTP
                 </button>
               </>
             ) : (
               <>
-                <input
+                <input className="my-1"
                   type="text"
                   placeholder="Enter OTP"
                   value={otp}
@@ -558,10 +558,10 @@ export default function AuthCard() {
 //         <div className="auth-front">
 //           <h2>Login</h2>
 //           <form onSubmit={handleLogin}>
-//             <input type="email" name="email" placeholder="Email" value={login.email} onChange={(e) => handleChange(e, "login")} required />
+//             <input className="my-1" type="email" name="email" placeholder="Email" value={login.email} onChange={(e) => handleChange(e, "login")} required />
 //             {errors.email && <p className="error">{errors.email}</p>}
 //             <div className="password-field">
-//               <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={login.password} onChange={(e) => handleChange(e, "login")} required />
+//               <input className="my-1" type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={login.password} onChange={(e) => handleChange(e, "login")} required />
 //               <span className="toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
 //             </div>
 //             {errors.password && <p className="error">{errors.password}</p>}
@@ -581,22 +581,22 @@ export default function AuthCard() {
 //           <form onSubmit={handleSignup}>
 //             {!otpStep ? (
 //               <>
-//                 <input type="text" name="name" placeholder="Full Name" value={form.name} onChange={handleChange} required />
-//                 <input type="text" name="contact" placeholder="Contact (10 digits)" value={form.contact} onChange={handleChange} maxLength={10} required />
+//                 <input className="my-1" type="text" name="name" placeholder="Full Name" value={form.name} onChange={handleChange} required />
+//                 <input className="my-1" type="text" name="contact" placeholder="Contact (10 digits)" value={form.contact} onChange={handleChange} maxLength={10} required />
 //                 {errors.contact && <p className="error">{errors.contact}</p>}
-//                 <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
+//                 <input className="my-1" type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
 //                 {errors.email && <p className="error">{errors.email}</p>}
-//                 <input type="date" name="dob" value={form.dob} onChange={handleChange} required />
+//                 <input className="my-1" type="date" name="dob" value={form.dob} onChange={handleChange} required />
 //                 <div className="password-field">
-//                   <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={form.password} onChange={handleChange} required />
+//                   <input className="my-1" type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={form.password} onChange={handleChange} required />
 //                   <span className="toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? <FaEyeSlash /> : <FaEye />}</span>
 //                 </div>
 //                 {errors.password && <p className="error">{errors.password}</p>}
-//                 <input type="password" name="confirmPassword" placeholder="Confirm Password" value={form.confirmPassword} onChange={handleChange} required />
+//                 <input className="my-1" type="password" name="confirmPassword" placeholder="Confirm Password" value={form.confirmPassword} onChange={handleChange} required />
 //                 {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
 
 //                 <div className="terms-checkbox">
-//                   <input type="checkbox" id="terms" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
+//                   <input className="my-1" type="checkbox" id="terms" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
 //                   <label htmlFor="terms">I agree to the <a href="/terms" className="text-primary">Terms & Conditions</a></label>
 //                 </div>
 
@@ -604,7 +604,7 @@ export default function AuthCard() {
 //               </>
 //             ) : (
 //               <>
-//                 <input type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} required />
+//                 <input className="my-1" type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} required />
 //                 <button type="submit">Verify & Sign Up</button>
 //               </>
 //             )}

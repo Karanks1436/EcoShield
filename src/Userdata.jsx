@@ -110,11 +110,7 @@ const DynamicScanDevice = () => {
   const handleScan = async (e) => {
     e.preventDefault();
 
-    if (!userEmail) {
-      alert("You need to log in to perform a scan.");
-      navigate("/login");
-      return;
-    }
+    
 
     if (scanning) return;
 

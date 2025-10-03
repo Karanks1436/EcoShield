@@ -10,7 +10,7 @@ function Termsandconditions() {
       fontFamily: "Arial, sans-serif",
     },
     heading: {
-      color: "#28a745",
+      color: "green",
       fontSize: "2.5rem",
       textAlign: "center",
       fontWeight: "bold",

@@ -129,19 +129,19 @@ export default function ScamReport() {
 
         <style>{`
           .scam-container { min-height: 100vh; padding: 40px 10%; background: #111; color: #eee; font-family: "Segoe UI", sans-serif; position: relative; }
-          .user-info { position: absolute; top: 20px; right: 10%; background: #222; padding: 8px 14px; border-radius: 6px; font-size: 0.95rem; color: #00cc66; border: 1px solid #333; }
+          .user-info { position: absolute; top: 20px; right: 10%; background: #222; padding: 8px 14px; border-radius: 6px; font-size: 0.95rem; color: green; border: 1px solid #333; }
           .scam-title { font-size: 2rem; font-weight: bold; margin-bottom: 20px; text-align: center; }
           .scam-form { display: flex; flex-direction: column; gap: 15px; background: #1a1a1a; padding: 20px; border-radius: 8px; margin-bottom: 40px; }
           .scam-form input, .scam-form textarea { padding: 10px; border: 1px solid #444; border-radius: 6px; background: #000; color: #fff; font-size: 1rem; }
-          .scam-form button { background: #00cc66; color: #fff; border: none; padding: 10px 15px; font-size: 1rem; border-radius: 6px; cursor: pointer; transition: 0.3s; }
-          .scam-form button:hover { background: #00994d; }
+          .scam-form button { background: green; color: #fff; border: none; padding: 10px 15px; font-size: 1rem; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+          .scam-form button:hover { background: green; }
           .scam-list { display: flex; flex-direction: column; gap: 15px; }
-          .scam-item { background: #1a1a1a; padding: 15px; border-radius: 8px; border-left: 4px solid #00cc66; }
-          .scam-item h3 { margin: 0 0 8px; color: #00cc66; }
+          .scam-item { background: #1a1a1a; padding: 15px; border-radius: 8px; border-left: 4px solid green; }
+          .scam-item h3 { margin: 0 0 8px; color: green; }
           .scam-item img { max-width: 200px; margin-top: 10px; border-radius: 6px; border: 1px solid #333; }
           .scam-item button { margin-top: 10px; background: #cc0033; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
           .scam-item button:hover { background: #990026; }
-          .readonly-msg { color: #ffcc00; font-size: 0.95rem; }
+          .readonly-msg { color: green; font-size: 0.95rem; }
         `}</style>
       </div>
     </>

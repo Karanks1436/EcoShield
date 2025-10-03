@@ -112,7 +112,7 @@ export default function ProfilePage() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+        background: "black",
         padding: "2rem",
         fontFamily: "Arial, sans-serif",
       }}
@@ -135,7 +135,8 @@ export default function ProfilePage() {
             textAlign: "center",
             marginBottom: "2rem",
             fontSize: "2rem",
-            color: "green",
+            color: "white",
+            fontWeight:"bolder",
           }}
         >
           Profile

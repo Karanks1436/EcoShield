@@ -22,7 +22,7 @@
 .intro-line {
   font-size: 0.9rem;
   letter-spacing: 2px;
-  border-left: 2px solid royalblue;
+  border-left: 2px solid green;
   padding-left: 8px;
   margin-bottom: 10px;
 }
@@ -34,7 +34,7 @@
 }
 
 .highlight {
-  color: royalblue;
+  color: green;
 }
 
 .subtitle {
@@ -86,7 +86,7 @@
   left: -20px;
   width: 300px;
   height: 100%;
-  border: 2px solid royalblue;
+  border: 2px solid green;
   z-index: -1;
 }
 
@@ -100,14 +100,14 @@
 .dot {
   width: 8px;
   height: 8px;
-  border: 1px solid royalblue;
+  border: 1px solid green;
   border-radius: 50%;
   margin: 8px 0;
 }
 
 .dot.active,
 .dot:hover {
-  background-color: royalblue;
+  background-color: green;
 }
 
 .page-indicator {
@@ -123,7 +123,7 @@
   max-width: 900px;
   margin: 50px auto;
   text-align: center;
-  border-left: 4px solid royalblue;
+  border-left: 4px solid green;
   border-radius: 14px;
   padding: 32px;
 }
@@ -238,7 +238,7 @@
 .intro-line {
   font-size: 0.9rem;
   letter-spacing: 2px;
-  border-left: 3px solid royalblue;
+  border-left: 3px solid green;
   padding-left: 10px;
   margin-bottom: 15px;
 }
@@ -250,8 +250,8 @@
 }
 
 .highlight {
-  color: royalblue;
-  text-shadow: 0 0 10px royalblue;
+  color: green;
+  text-shadow: 0 0 10px green;
 }
 
 .subtitle {
@@ -272,7 +272,7 @@
 
 .edit-btn {
   margin-top: 20px;
-  background: royalblue;
+  background: green;
   border: none;
   padding: 10px 20px;
   font-weight: bold;
@@ -293,7 +293,7 @@
   max-width: 900px;
   margin: 50px auto;
   text-align: center;
-  border-left: 4px solid royalblue;
+  border-left: 4px solid green;
   border-radius: 14px;
   padding: 32px;
   color: #fff;

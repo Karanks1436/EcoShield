@@ -158,7 +158,7 @@ export default function AdminDash() {
                   <td>{u.contact}</td>
                   <td>
                     {u.email === "eco.shield.0001@gmail.com" ? (
-                      <span style={{ color: "#00ff99", fontWeight: "bold" }}>
+                      <span style={{ color: "black", fontWeight: "bold" }}>
                         Admin
                       </span>
                     ) : (
@@ -218,16 +218,16 @@ const styles = {
   heading: {
     fontSize: "36px",
     marginBottom: "30px",
-    color: "#00ff99",
+    color: "green",
     letterSpacing: "1px",
-    textShadow: "0 0 10px #00ff99",
+    textShadow: "0 0 10px green",
   },
   searchInput: {
     padding: "14px 18px",
     borderRadius: "14px",
-    border: "2px solid #00ff99",
+    border: "2px solid green",
     background: "#1a1a1a",
-    color: "#00ff99",
+    color: "green",
     width: "100%",
     maxWidth: "450px",
     marginBottom: "30px",
@@ -238,7 +238,7 @@ const styles = {
   tableWrapper: {
     overflowX: "auto",
     borderRadius: "14px",
-    boxShadow: "0 0 20px rgba(0, 255, 153, 0.2)",
+    boxShadow: "0 0 20px green",
     marginBottom: "30px",
   },
   table: {
@@ -247,11 +247,11 @@ const styles = {
     minWidth: "720px",
   },
   trColors: [
-    { backgroundColor: "#1e1e2e" },
-    { backgroundColor: "#1b2a3a" },
-    { backgroundColor: "#1a3a2e" },
-    { backgroundColor: "#2a1e2e" },
-    { backgroundColor: "#2a2e1e" },
+    { backgroundColor: "#585858ff" },
+    { backgroundColor: "#383838ff" },
+    { backgroundColor: "#222222da" },
+    { backgroundColor: "#9a9a9aff" },
+    { backgroundColor: "#141414ff" },
   ],
   deleteBtn: {
     padding: "10px 20px",

@@ -18,7 +18,7 @@ export default function Services() {
   return (
     <div id="services" className="services-section text-center py-5">
       {/* Section Title */}
-      <h2 className="services-title text-success fw-bold">OUR SERVICES</h2>
+      <h2 className="services-title fw-bold">OUR SERVICES</h2>
       <p className="services-subtitle text-light">
         Comprehensive cybersecurity solutions to protect your business and data
       </p>

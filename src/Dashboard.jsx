@@ -23,7 +23,7 @@ export default function Homepage() {
       {/* Navbar */}
      <nav className="navbar navbar-expand-lg navbar-dark bg-black px-4">
   <div className="container-fluid">
-    <a className="navbar-brand fw-bold text-success fs-3" href="#home">
+    <a className="navbar-brand fw-bold txtgreen fs-3" href="#home">
       Eco Shield
     </a>
     <button
@@ -41,16 +41,16 @@ export default function Homepage() {
     <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul className="navbar-nav text-center">
         <li className="nav-item mx-2 my-1">
-          <a className="nav-link fw-semibold" href="#home">Home</a>
+          <a className="nav-link text-white fw-semibold" href="#home">Home</a>
         </li>
         <li className="nav-item mx-2 my-1">
-          <a className="nav-link fw-semibold" href="/about">About</a>
+          <a className="nav-link text-white fw-semibold" href="/about">About</a>
         </li>
         <li className="nav-item mx-2 my-1">
-          <a className="nav-link fw-semibold" href="/services">Services</a>
+          <a className="nav-link text-white fw-semibold" href="/services">Services</a>
         </li>
-        <li className="nav-item mx-2 my-1">
-          <a className="nav-link bg-success rounded text-black fw-semibold" href="/auth">Login/SignUp</a>
+        <li className="nav-item bggreen mx-2 my-1">
+          <a className="nav-link bggreen rounded text-black fw-semibold" href="/auth">Login/SignUp</a>
         </li>
       </ul>
     </div>
@@ -67,13 +67,13 @@ export default function Homepage() {
         {/* Left Content */}
         <div className="text-content text-center text-lg-start">
           <h1 className="fw-bold display-3 text-secondary mb-3">
-            ECO <br /> <span className="text-success">SHIELD</span>
+            ECO <br /> <span className="txtgreen">SHIELD</span>
           </h1>
           <p className="lead text-light fs-4">
             We protect your data and <br /> systems from hacks
           </p>
           <a href="/auth">
-            <button className="btn btn-success btn-lg mt-4 px-5 py-2 rounded-3 shadow">
+            <button className="btn btn-success btn-lg mt-4 px-5 py-2 rounded-4 shadow">
               🚀 Get Started
             </button>
           </a>
@@ -88,7 +88,7 @@ export default function Homepage() {
       {/* How to Use Section */}
       <section id="how-to-use" className="py-5 bg-black text-light text-center">
         <div className="container">
-          <h2 className="fw-bold text-success mb-4">How to Use Eco Shield</h2>
+          <h2 className="fw-bold txtgreen mb-4">How to Use Eco Shield</h2>
           <p className="lead fs-5">
             Getting started is simple. Just create an account, connect your
             systems, and let Eco Shield monitor for vulnerabilities in
@@ -101,7 +101,7 @@ export default function Homepage() {
       {/* Why Eco Shield Section */}
       <section id="why-eco-shield" className="py-5 text-center">
         <div className="container">
-          <h2 className="fw-bold text-success mb-4">Why Choose Eco Shield?</h2>
+          <h2 className="fw-bold txtgreen mb-4">Why Choose Eco Shield?</h2>
           <div className="row">
             <div className="col-md-6 mb-4">
               <div className="p-4 border rounded-4 bg-black text-light shadow-sm h-100">
@@ -134,7 +134,7 @@ export default function Homepage() {
       {/* What to Do if Hacked Section */}
       <section id="what-to-do" className="py-5 bg-black text-light">
         <div className="container text-center">
-          <h2 className="fw-bold text-success mb-4">
+          <h2 className="fw-bold txtgreen mb-4">
             What to Do if You Got Hacked
           </h2>
           <p className="lead fs-5">
@@ -144,7 +144,7 @@ export default function Homepage() {
             of your system and secure your data.
           </p>
           <a href="/contact">
-            <button className="btn btn-outline-success btn-lg mt-3 px-5 py-2 rounded-3 shadow-sm">
+            <button className="btn btn-outline-success btn-lg mt-3 px-5 py-2 text-white rounded-4 shadow-sm">
               Get Help Now
             </button>
           </a>

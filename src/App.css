@@ -12,11 +12,17 @@ body, html {
   background-color: black;
 }
 
-
+.txtgreen{
+  color: green;
+}
+.bggreen{
+  background: green;
+  border-radius: 10px;
+}
 
 .hero-img {
   max-width: 300px;
-  filter: drop-shadow(0 0 10px #00ff88);
+  filter: drop-shadow(0 0 10px green);
 }
 
 
@@ -32,26 +38,26 @@ body, html {
 }
 
 .member-card {
-  border: 1px solid #00ff88;
+  border: 1px solid green;
   border-radius: 12px;
   background: black;
   transition: 0.3s;
 }
 
 .member-card:hover {
-  box-shadow: 0 0 15px #00ff88;
+  box-shadow: 0 0 15px green;
 }
 
 .member-img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: 2px solid #00ff88;
+  border: 2px solid green;
   object-fit: cover;
 }
 
 .github-handle {
-  color: #00ff88;
+  color: green;
   margin: 0;
   font-size: 0.9rem;
 }
@@ -75,13 +81,13 @@ body, html {
 }
 
 .services-subtitle {
-  color: #00ff80;
+  color: green;
   font-size: 1.2rem;
 }
 
 .service-icon {
   font-size: 60px;
-  color: #00ff80;
+  color: green;
   margin-bottom: 20px;
 }
 
@@ -92,7 +98,7 @@ body, html {
 }
 
 .service-text {
-  color: #00ff80;
+  color: green;
   font-size: 1rem;
 }
 body {
@@ -102,15 +108,15 @@ body {
 }
 
 .text-neon {
-  color: #00ff00;
-  text-shadow: 0 0 8px #00ff00, 0 0 16px #00ff00;
+  color: green;
+  text-shadow: 0 0 8px green, 0 0 16px green;
 }
 
 .contact-form input,
 .contact-form textarea {
   background: transparent;
-  border: 1px solid #00ff00;
-  color: #00ff00;
+  border: 1px solid green;
+  color: green;
 }
 
 .contact-form input::placeholder,
@@ -123,13 +129,13 @@ body {
   height: 100vh;
 }
 .btn-outline-neon {
-  border: 1px solid #00ff00;
-  color: #00ff00;
+  border: 1px solid green;
+  color: green;
   font-weight: bold;
 }
 
 .btn-outline-neon:hover {
-  background-color: #00ff00;
+  background-color: green;
   color: black;
 }
 .btn-black{
@@ -142,8 +148,8 @@ body {
   left: 0;
   width: 100%;
   height: 300px;
-  background-image: linear-gradient(#00ff00 1px, transparent 1px),
-                    linear-gradient(90deg, #00ff00 1px, transparent 1px);
+  background-image: linear-gradient(green 1px, transparent 1px),
+                    linear-gradient(90deg, green 1px, transparent 1px);
   background-size: 40px 40px;
   opacity: 0.2;
 } */
@@ -158,7 +164,7 @@ body {
 }
 
 .member-card:hover {
-  box-shadow: 0px 8px 20px rgba(0, 255, 128, 0.3);
+  box-shadow: 0px 8px 20px green;
 }
 
 .member-img {
@@ -176,8 +182,8 @@ body {
 .text-neon {
   font-weight: 700;
   font-size: 2.5rem;
-  color: #00ff88;
-  text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
+  color: green;
+  text-shadow: 0 0 10px green, 0 0 20px green;
 }
 
 /* Glass Effect */
@@ -188,24 +194,24 @@ body {
   transition: all 0.3s ease-in-out;
 }
 .glass-card:hover {
-  border-color: #00ff88;
+  border-color: green;
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
 }
 
 /* Neon Button */
 .btn-neon {
   background: #000;
-  color: #00ff88;
-  border: 2px solid #00ff88;
+  color: green;
+  border: 2px solid green;
   font-weight: bold;
   padding: 12px;
   border-radius: 12px;
   transition: all 0.3s;
 }
 .btn-neon:hover {
-  background: #00ff88;
+  background: green;
   color: #000;
-  box-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88;
+  box-shadow: 0 0 20px green, 0 0 40px green;
 }
 
 /* Inputs */
@@ -217,9 +223,9 @@ body {
   padding: 12px;
 }
 .contact-form .form-control:focus {
-  border-color: #00ff88;
+  border-color: green;
   outline: none;
-  box-shadow: 0 0 10px #00ff88;
+  box-shadow: 0 0 10px green;
 }
 
 /* Futuristic Grid Background */
@@ -265,7 +271,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   border: none;
-  background-color: #cc9f00;
+  background-color: green;
   color: #fff;
   border-radius: 8px;
   transition: background-color 0.3s;
@@ -326,7 +332,7 @@ body {
 }
 
 .safety-tips h3 {
-  color: #f8d347;
+  color: green;
 }
 
 .scanpage {
@@ -341,7 +347,7 @@ body {
 
 .scan-title {
   font-size: 2rem;
-  color: #f8d347;
+  color: green;
 }
 
 .input-container {

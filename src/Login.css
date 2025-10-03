@@ -5,7 +5,7 @@
   align-items: center;
   height: 100vh;
   perspective: 1200px;
-  background: radial-gradient(circle at top left, #0a0f1a, #0e121c);
+  background: radial-gradient(circle at top left, black, rgb(17, 17, 17));
   font-family: 'Poppins', sans-serif;
   overflow: hidden;
   padding: 20px;
@@ -17,7 +17,7 @@
   width: 100%;
   max-width: 400px;
   height: auto;
-  min-height: 520px;
+  min-height: 600px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.8s ease-in-out;
@@ -43,9 +43,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: black;
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 255, 200, 0.3);
+  border: 1px solid green;
   color: #fff;
   transition: all 0.5s ease;
 }
@@ -70,7 +70,7 @@ input {
   margin: 12px 0;
   margin-top: 10px;
   border-radius: 14px;
-  border: 1px solid rgba(0, 255, 200, 0.4);
+  border: 1px solid green;
   outline: none;
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
@@ -89,7 +89,7 @@ button {
   padding: 16px;
   margin-top: 20px;
   border: none;
-  border-radius: 14px;
+  border-radius: 20px;
   background: linear-gradient(45deg, green, #002517);
   color: #000;
   font-weight: 600;
@@ -101,9 +101,9 @@ button {
 }
 
 button:disabled {
-  background: rgba(0, 255, 200, 0.2);
+  background: rgb(0, 35, 0);
   cursor: not-allowed;
-  color: #555;
+  color: grey;
 }
 
 button:hover:not(:disabled) {
@@ -127,7 +127,7 @@ p .flip-btn {
 
 p .flip-btn:hover {
   text-decoration: underline;
-  color: #00ffa0;
+  color: green;
 }
 
 /* ====== Password Toggle ====== */
