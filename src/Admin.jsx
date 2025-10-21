@@ -218,16 +218,16 @@ const styles = {
   heading: {
     fontSize: "36px",
     marginBottom: "30px",
-    color: "green",
+    color: "#D4AF37",
     letterSpacing: "1px",
-    textShadow: "0 0 10px green",
+    textShadow: "0 0 10px #014D4E",
   },
   searchInput: {
     padding: "14px 18px",
     borderRadius: "14px",
-    border: "2px solid green",
+    border: "2px solid #014D4E",
     background: "#1a1a1a",
-    color: "green",
+    color: "#014D4E",
     width: "100%",
     maxWidth: "450px",
     marginBottom: "30px",
@@ -238,7 +238,7 @@ const styles = {
   tableWrapper: {
     overflowX: "auto",
     borderRadius: "14px",
-    boxShadow: "0 0 20px green",
+    boxShadow: "0 0 20px #014D4E",
     marginBottom: "30px",
   },
   table: {
@@ -247,11 +247,11 @@ const styles = {
     minWidth: "720px",
   },
   trColors: [
-    { backgroundColor: "#585858ff" },
-    { backgroundColor: "#383838ff" },
+    { backgroundColor: "#D4AF37" },
+    { backgroundColor: "#014D4E" },
     { backgroundColor: "#222222da" },
-    { backgroundColor: "#9a9a9aff" },
-    { backgroundColor: "#141414ff" },
+    { backgroundColor: "#076c79ff" },
+    { backgroundColor: "#021611ff" },
   ],
   deleteBtn: {
     padding: "10px 20px",

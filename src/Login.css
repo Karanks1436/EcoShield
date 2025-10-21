@@ -45,7 +45,7 @@
   justify-content: center;
   background: black;
   backdrop-filter: blur(20px);
-  border: 1px solid green;
+  border: 1px solid #014D4E;
   color: #fff;
   transition: all 0.5s ease;
 }
@@ -59,7 +59,7 @@ h2 {
   text-align: center;
   margin-bottom: 30px;
   font-size: 28px;
-  color: green;
+  color: #014D4E;
   letter-spacing: 1px;
 }
 
@@ -70,7 +70,7 @@ input {
   margin: 12px 0;
   margin-top: 10px;
   border-radius: 14px;
-  border: 1px solid green;
+  border: 1px solid #014D4E;
   outline: none;
   background: rgba(255, 255, 255, 0.05);
   color: #fff;
@@ -80,7 +80,7 @@ input {
 }
 
 input:focus {
-  border-color: green;
+  border-color: #014D4E;
 }
 
 /* ====== Buttons ====== */
@@ -90,7 +90,7 @@ button {
   margin-top: 20px;
   border: none;
   border-radius: 20px;
-  background: linear-gradient(45deg, green, #002517);
+  background: linear-gradient(45deg, #014D4E, #002517);
   color: #000;
   font-weight: 600;
   font-size: 16px;
@@ -120,14 +120,14 @@ p {
 }
 
 p .flip-btn {
-  color: green;
+  color: #014D4E;
   cursor: pointer;
   font-weight: bold;
 }
 
 p .flip-btn:hover {
   text-decoration: underline;
-  color: green;
+  color: #014D4E;
 }
 
 /* ====== Password Toggle ====== */
@@ -141,12 +141,12 @@ p .flip-btn:hover {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: green;
+  color: #014D4E;
   transition: color 0.3s ease;
 }
 
 .password-field .toggle:hover {
-  color: green;
+  color: #014D4E;
 }
 
 /* ====== Error Messages ====== */
@@ -171,13 +171,13 @@ p .flip-btn:hover {
   width: 18px;
   height: 18px;
   margin-right: 10px;
-  accent-color: green;
+  accent-color: #014D4E;
   cursor: pointer;
   border-radius: 5px;
 }
 
 .terms-checkbox a {
-  color: green;
+  color: #014D4E;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -216,4 +216,23 @@ p .flip-btn:hover {
   .terms-checkbox {
     font-size: 13px;
   }
+}
+
+.emarld{
+  color: #50C878;
+}
+.emarldbtn{
+  background:#50C878;
+}
+.teal{
+  color: #014D4E;
+}
+.tealbtn{
+  background: #014D4E;
+}
+.metalicgold{
+  color: #D4AF37;
+}
+.metalicgoldbtn{
+  background: #D4AF37;
 }

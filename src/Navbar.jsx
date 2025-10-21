@@ -59,7 +59,7 @@ export default function Navbar() {
           gap: 0.5rem;
           font-weight: bold;
           font-size: 1.75rem;
-          color: rgb(33,33,33);
+          color: #D4AF37;
           cursor: pointer;
           transition: transform 0.3s ease;
         }
@@ -81,7 +81,7 @@ export default function Navbar() {
         }
 
         .nav-links a {
-          color: rgba(255, 255, 255, 1);
+          color: #D4AF37;
           text-decoration: none;
           font-size: 1rem;
           padding: 0.5rem 0.8rem;
@@ -102,13 +102,13 @@ export default function Navbar() {
           cursor: pointer;
           padding: 0.5rem 1rem;
           border-radius: 8px;
-          background: rgba(0, 0, 0, 1);
-          color: rgba(255, 255, 255, 1);
+          background:#014D4E;
+          color:#D4AF37;
           transition: 0.2s ease;
         }
 
         .dropdown-toggle:hover {
-          background: rgba(255, 255, 255, 1);
+          background:#D4AF37;
           color:black;
         }
 
@@ -117,8 +117,8 @@ export default function Navbar() {
           position: absolute;
           top: 120%;
           right: 0;
-          background: rgb(255,255,255);
-          color: rgb(33,33,33);
+          background: #D4AF37;
+          color: #014D4E;
           border-radius: 8px;
           min-width: 160px;
           box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -235,7 +235,7 @@ export default function Navbar() {
 
       <nav className="navbar">
         <div className="nav-left">
-          <div className="nav-logo text-white" onClick={() => navigate("/userhome")}>
+          <div className="nav-logo" onClick={() => navigate("/userhome")}>
             <img src="/ecoshieldlogo.jpeg" className="rounded-circle" alt="Logo" />
             EcoShield
           </div>

@@ -73,9 +73,9 @@ export default function About() {
         <div className="overlay"></div>
         <div className="outerdiv">
           <div className="about-content-box">
-            <p className="intro-line">HELLO, I AM {biodata.namea}</p>
+            <p className="intro-line metalicgold">HELLO, I AM {biodata.namea}</p>
             <h1>
-              I'M A <span className="txtgreen">WEB DEVELOPER</span>
+              I'M A <span className="teal">WEB DEVELOPER</span>
             </h1>
             <p className="subtitle">
               I love working with SQL, API's, and databases and always curious about how data moves and connects. Beyond the Backend I'm also exploring AI-thinking about how human thoughts can be translated into intelligent system. I enjoy experimenting, building projects, and finding creative ways to make tech feel smarter and smoother.
@@ -83,22 +83,22 @@ export default function About() {
 
             <ul className="bio-list">
               <li>
-                <strong>Github:</strong> <a href={biodata.githuba}>{biodata.githuba}</a>
+                <strong className="metalicgold">Github:</strong> <a href={biodata.githuba}>{biodata.githuba}</a>
               </li>
               <li>
-                <strong>Contact:</strong> {biodata.contacta}
+                <strong className="metalicgold">Contact:</strong> {biodata.contacta}
               </li>
               <li>
-                <strong>Email:</strong> {biodata.emaila}
+                <strong className="metalicgold">Email:</strong> {biodata.emaila}
               </li>
               <li>
-                <strong>Course:</strong> {biodata.course}
+                <strong className="metalicgold">Course:</strong> {biodata.course}
               </li>
               <li>
-                <strong>Specialty:</strong> {biodata.specialtya}
+                <strong className="metalicgold">Specialty:</strong> {biodata.specialtya}
               </li>
               <li>
-                <strong>Address:</strong> {biodata.address}
+                <strong className="metalicgold">Address:</strong> {biodata.address}
               </li>
             </ul>
           </div>
@@ -108,9 +108,9 @@ export default function About() {
       <div ref={addToRefs} className="about-page-karan bg-black">
         <div className="overlay"></div>
         <div className="about-content-box">
-          <p className="intro-line">HELLO, I AM {biodata.namek}</p>
+          <p className="intro-line metalicgold">HELLO, I AM {biodata.namek}</p>
           <h1>
-            I'M A <span className="txtgreen">FULL STACK WEB DEVELOPER</span>
+            I'M A <span className="teal">FULL STACK WEB DEVELOPER</span>
           </h1>
           <p className="subtitle">
             Passionate about crafting clean, efficient, and scalable code, I am
@@ -123,22 +123,22 @@ export default function About() {
 
           <ul className="bio-list">
             <li>
-              <strong>Github:</strong> <a href={biodata.githubk}>{biodata.githubk}</a>
+              <strong className="metalicgold">Github:</strong> <a href={biodata.githubk}>{biodata.githubk}</a>
             </li>
             <li>
-              <strong>Contact:</strong> {biodata.contactk}
+              <strong className="metalicgold">Contact:</strong> {biodata.contactk}
             </li>
             <li>
-              <strong>Email:</strong> {biodata.emailk}
+              <strong className="metalicgold">Email:</strong> {biodata.emailk}
             </li>
             <li>
-              <strong>Course:</strong> {biodata.course}
+              <strong className="metalicgold">Course:</strong> {biodata.course}
             </li>
             <li>
-              <strong>Specialty:</strong> {biodata.specialtyk}
+              <strong className="metalicgold">Specialty:</strong> {biodata.specialtyk}
             </li>
             <li>
-              <strong>Address:</strong> {biodata.address}
+              <strong className="metalicgold">Address:</strong> {biodata.address}
             </li>
           </ul>
         </div>
@@ -148,9 +148,9 @@ export default function About() {
         <div className="overlay"></div>
         <div className="outerdiv">
           <div className="about-content-box">
-            <p className="intro-line">HELLO, I AM {biodata.names}</p>
+            <p className="intro-line metalicgold">HELLO, I AM {biodata.names}</p>
             <h1>
-              I'M A <span className="txtgreen">CREATIVE CODER</span>
+              I'M A <span className="teal">CREATIVE CODER</span>
             </h1>
             <p className="subtitle">
               I am a Creative Coder on a Journey of Discovery a passionate and
@@ -166,22 +166,22 @@ export default function About() {
 
             <ul className="bio-list">
               <li>
-                <strong>Github:</strong>  <a href={biodata.githubs}>{biodata.githubs}</a>
+                <strong className="metalicgold">Github:</strong>  <a href={biodata.githubs}>{biodata.githubs}</a>
               </li>
               <li>
-                <strong>Contact:</strong> {biodata.contacts}
+                <strong className="metalicgold">Contact:</strong> {biodata.contacts}
               </li>
               <li>
-                <strong>Email:</strong> {biodata.emails}
+                <strong className="metalicgold">Email:</strong> {biodata.emails}
               </li>
               <li>
-                <strong>Course:</strong> {biodata.course}
+                <strong className="metalicgold">Course:</strong> {biodata.course}
               </li>
               <li>
-                <strong>Specialty:</strong> {biodata.specialtys}
+                <strong className="metalicgold">Specialty:</strong> {biodata.specialtys}
               </li>
               <li>
-                <strong>Address:</strong> {biodata.address}
+                <strong className="metalicgold">Address:</strong> {biodata.address}
               </li>
             </ul>
           </div>
@@ -191,9 +191,9 @@ export default function About() {
       <div ref={addToRefs} className="about-page-tushar reverse bg-black">
         <div className="overlay"></div>
         <div className="about-content-box ">
-          <p className="intro-line">HELLO, I AM {biodata.namet}</p>
+          <p className="intro-line metalicgold">HELLO, I AM {biodata.namet}</p>
           <h1>
-            I'M A <span className="txtgreen">UI/UX DESIGNER</span>
+            I'M A <span className="teal">UI/UX DESIGNER</span>
           </h1>
           <p className="subtitle">
             I focus on every stage of the design process — from wireframing and
@@ -206,22 +206,22 @@ export default function About() {
 
           <ul className="bio-list">
             <li>
-              <strong>Github:</strong> <a href={biodata.githubt}>{biodata.githubt}</a>
+              <strong className="metalicgold">Github:</strong> <a href={biodata.githubt}>{biodata.githubt}</a>
             </li>
             <li>
-              <strong>Contact:</strong> {biodata.contactt}
+              <strong className="metalicgold">Contact:</strong> {biodata.contactt}
             </li>
             <li>
-              <strong>Email:</strong> {biodata.emailt}
+              <strong className="metalicgold">Email:</strong> {biodata.emailt}
             </li>
             <li>
-              <strong>Course:</strong> {biodata.course}
+              <strong className="metalicgold">Course:</strong> {biodata.course}
             </li>
             <li>
-              <strong>Specialty:</strong> {biodata.specialtyt}
+              <strong className="metalicgold">Specialty:</strong> {biodata.specialtyt}
             </li>
             <li>
-              <strong>Address:</strong> {biodata.address}
+              <strong className="metalicgold">Address:</strong> {biodata.address}
             </li>
           </ul>
         </div>
@@ -231,9 +231,9 @@ export default function About() {
         <div className="overlay"></div>
         <div className="outerdiv">
           <div className="about-content-box">
-            <p className="intro-line">HELLO, I AM {biodata.namey}</p>
+            <p className="intro-line metalicgold">HELLO, I AM {biodata.namey}</p>
             <h1>
-              I'M A <span className="txtgreen">GRAPHIC DESIGNER</span>
+              I'M A <span className="teal">GRAPHIC DESIGNER</span>
             </h1>
             <p className="subtitle">
               Driven by creativity and a keen eye for detail, I specialize in
@@ -248,22 +248,22 @@ export default function About() {
 
             <ul className="bio-list">
               <li>
-                <strong>Github:</strong>  <a href={biodata.githuby}>{biodata.githuby}</a>
+                <strong className="metalicgold">Github:</strong>  <a href={biodata.githuby}>{biodata.githuby}</a>
               </li>
               <li>
-                <strong>Contact:</strong> {biodata.contacty} 
+                <strong className="metalicgold">Contact:</strong> {biodata.contacty} 
               </li>
               <li>
-                <strong>Email:</strong> {biodata.emaily}
+                <strong className="metalicgold">Email:</strong> {biodata.emaily}
               </li>
               <li>
-                <strong>Course:</strong> {biodata.course}
+                <strong className="metalicgold">Course:</strong> {biodata.course}
               </li>
               <li>
-                <strong>Specialty:</strong> {biodata.specialtyy}
+                <strong className="metalicgold">Specialty:</strong> {biodata.specialtyy}
               </li>
               <li>
-                <strong>Address:</strong> {biodata.address}
+                <strong className="metalicgold">Address:</strong> {biodata.address}
               </li>
             </ul>
           </div>

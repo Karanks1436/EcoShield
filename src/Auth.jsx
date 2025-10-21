@@ -186,7 +186,7 @@ export default function AuthCard() {
       <div className={`auth-card ${isFlipped ? "flipped" : ""}`}>
         {/* 🔹 Front Side - Login */}
         <div className="auth-front">
-          <h2>Login</h2>
+          <h2 className="metalicgold">Login</h2>
           <form onSubmit={handleLogin}>
             <input className="my-1"
               type="email"
@@ -228,7 +228,7 @@ export default function AuthCard() {
 
         {/* 🔹 Back Side - Signup */}
         <div className="auth-back">
-          <h2>Sign Up</h2>
+          <h2 className="metalicgold">Sign Up</h2>
           <form onSubmit={handleSignup}>
             {!otpStep ? (
               <>

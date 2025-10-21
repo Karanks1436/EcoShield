@@ -143,7 +143,7 @@ export default function HackPreventions() {
   <>
   <Navbar/>
     <div className="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center bg-black txtgreen p-4">
-      <h1 className="display-4 fw-bold mb-5 txtgreen text-uppercase border-bottom border-dark pb-2">
+      <h1 className="display-4 fw-bold mb-5 metalicgold text-uppercase border-bottom border-dark pb-2">
         Hack Preventions
       </h1>
 
@@ -156,7 +156,7 @@ export default function HackPreventions() {
               style={{ cursor: "pointer" }}
             >
               <div className="card-body d-flex flex-column align-items-center">
-                <div className="txtgreen mb-3">{tip.icon}</div>
+                <div className="teal mb-3">{tip.icon}</div>
                 <h5 className="card-title fw-bold text-light">{tip.title}</h5>
               </div>
             </div>
@@ -166,14 +166,14 @@ export default function HackPreventions() {
 
       {/* Bootstrap Modal */}
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton className="bg-black txtgreen">
+        <Modal.Header closeButton className="bg-black emarld">
           <Modal.Title>{selectedTip?.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-black text-light">
+        <Modal.Body className="bg-black metalicgold">
           {selectedTip?.detail}
         </Modal.Body>
         <Modal.Footer className="bg-black">
-          <Button variant="success" onClick={handleClose}>
+          <Button variant="success" className="tealbtn" onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>
@@ -186,7 +186,7 @@ export default function HackPreventions() {
         }
         .prevention-card:hover {
           transform: scale(1.05);
-          box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+          box-shadow: 0 0 20px #014D4E;
           border-color: lime;
         }
       `}</style>

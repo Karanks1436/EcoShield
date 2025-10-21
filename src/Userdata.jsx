@@ -196,9 +196,9 @@ const DynamicScanDevice = () => {
   return (
     <>
       <Navbar />
-      <div className="dark-theme">
-        <div className="scanpage">
-          <h1 className="scan-title">Device Security Scan</h1>
+      <div className="dark-theme bg-black">
+        <div className="scanpage bg-black">
+          <h1 className="scan-title metalicgold">Device Security Scan</h1>
 
           {/* Auto-detected Device Type */}
           <div className="device-type-container">
@@ -223,20 +223,20 @@ const DynamicScanDevice = () => {
           <button
             ref={scanBtnRef}
             onClick={handleScan}
-            className="scan-button"
+            className="scan-button tealbtn"
           >
             Start Scan
           </button>
 
           {/* Progress Bar */}
-          <div className="progress-bar-container">
+          <div className="progress-bar-container bg-black">
             <div
-              className="progress-bar-fill"
+              className="progress-bar-fill bg-black"
               style={{ width: `${progress}%` }}
             />
           </div>
 
-          <div className="scan-logs">
+          <div className="scan-logs bg-black">
             {scanLogs.map((log, idx) => (
               <p
                 key={idx}
@@ -266,9 +266,9 @@ const DynamicScanDevice = () => {
           )}
 
           <div className="safety-tips">
-            <h3>Safety Tips</h3>
+            <h2 className="emarld">Safety Tips</h2>
             {safetySteps.map((tip, idx) => (
-              <p key={idx} className="tip">
+              <p key={idx} className="tip metalicgold">
                 {tip}
               </p>
             ))}

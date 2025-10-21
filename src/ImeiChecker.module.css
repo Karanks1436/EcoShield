@@ -120,9 +120,10 @@
 }
 
 .safety-tips {
-  background: #111;
+  background: #000000;
   padding: 15px;
   border-radius: 10px;
+  border: 1px solid #014D4E;
 }
 
 .tip {

@@ -27,7 +27,7 @@ export default function Homepage() {
       Eco Shield
     </a>
     <button
-      className="navbar-toggler"
+      className="navbar-toggler tealbtn rounded"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNav"
@@ -35,7 +35,7 @@ export default function Homepage() {
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span className="navbar-toggler-icon"></span>
+      <span className="navbar-toggler-icon"> </span>
     </button>
 
     <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -49,8 +49,8 @@ export default function Homepage() {
         <li className="nav-item mx-2 my-1">
           <a className="nav-link text-white fw-semibold" href="/services">Services</a>
         </li>
-        <li className="nav-item bggreen mx-2 my-1">
-          <a className="nav-link bggreen rounded text-black fw-semibold" href="/auth">Login/SignUp</a>
+        <li className="nav-item tealbtn rounded mx-2 my-1">
+          <a className="nav-link tealbtn rounded metalicgold fw-semibold" href="/auth">Login/SignUp</a>
         </li>
       </ul>
     </div>
@@ -67,13 +67,13 @@ export default function Homepage() {
         {/* Left Content */}
         <div className="text-content text-center text-lg-start">
           <h1 className="fw-bold display-3 text-secondary mb-3">
-            ECO <br /> <span className="txtgreen">SHIELD</span>
+            ECO <br /> <span className="teal">SHIELD</span>
           </h1>
           <p className="lead text-light fs-4">
             We protect your data and <br /> systems from hacks
           </p>
           <a href="/auth">
-            <button className="btn btn-success btn-lg mt-4 px-5 py-2 rounded-4 shadow">
+            <button className="tealbtn btn-lg mt-4 px-5 py-2 rounded-4 shadow">
               🚀 Get Started
             </button>
           </a>
@@ -88,7 +88,7 @@ export default function Homepage() {
       {/* How to Use Section */}
       <section id="how-to-use" className="py-5 bg-black text-light text-center">
         <div className="container">
-          <h2 className="fw-bold txtgreen mb-4">How to Use Eco Shield</h2>
+          <h2 className="fw-bold metalicgold mb-4">How to Use Eco Shield</h2>
           <p className="lead fs-5">
             Getting started is simple. Just create an account, connect your
             systems, and let Eco Shield monitor for vulnerabilities in
@@ -101,11 +101,11 @@ export default function Homepage() {
       {/* Why Eco Shield Section */}
       <section id="why-eco-shield" className="py-5 text-center">
         <div className="container">
-          <h2 className="fw-bold txtgreen mb-4">Why Choose Eco Shield?</h2>
+          <h2 className="fw-bold metalicgold mb-4">Why Choose Eco Shield?</h2>
           <div className="row">
             <div className="col-md-6 mb-4">
               <div className="p-4 border rounded-4 bg-black text-light shadow-sm h-100">
-                <h5 className="fw-bold mb-2">🛡️ Advanced Protection</h5>
+                <h5 className="fw-bold emarld mb-2">🛡️ Advanced Protection</h5>
                 <p className="mb-0">
                   Cutting-edge algorithms detect hacking attempts instantly.
                 </p>
@@ -113,7 +113,7 @@ export default function Homepage() {
             </div>
             <div className="col-md-6 mb-4">
               <div className="p-4 border rounded-4 bg-black text-light shadow-sm h-100">
-                <h5 className="fw-bold mb-2">⚡ Lightning Fast</h5>
+                <h5 className="fw-bold emarld mb-2">⚡ Lightning Fast</h5>
                 <p className="mb-0">
                   Real-time alerts and auto-defense mechanisms to keep you safe.
                 </p>
@@ -134,7 +134,7 @@ export default function Homepage() {
       {/* What to Do if Hacked Section */}
       <section id="what-to-do" className="py-5 bg-black text-light">
         <div className="container text-center">
-          <h2 className="fw-bold txtgreen mb-4">
+          <h2 className="fw-bold metalicgold mb-4">
             What to Do if You Got Hacked
           </h2>
           <p className="lead fs-5">
@@ -144,7 +144,7 @@ export default function Homepage() {
             of your system and secure your data.
           </p>
           <a href="/contact">
-            <button className="btn btn-outline-success btn-lg mt-3 px-5 py-2 text-white rounded-4 shadow-sm">
+            <button className="tealbtn btn-lg mt-3 px-5 py-2 text-white rounded-4 shadow-sm">
               Get Help Now
             </button>
           </a>
@@ -152,7 +152,7 @@ export default function Homepage() {
       </section>
 
       {/* Footer */}
-      <footer className="text-center py-3 bg-black text-secondary small">
+      <footer className="text-center py-3 bg-black metalicgold small">
         © {new Date().getFullYear()} Eco Shield. All rights reserved.
       </footer>
     </div>

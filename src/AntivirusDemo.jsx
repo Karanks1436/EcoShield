@@ -41,7 +41,7 @@ export default function AntivirusProtection() {
           min-height: 100vh;
         }
         .page-title {
-          background: linear-gradient(90deg, green, green);
+          background: linear-gradient(90deg, #D4AF37, #D4AF37);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           font-weight: 800;
@@ -66,7 +66,7 @@ export default function AntivirusProtection() {
           box-shadow: 0 10px 28px rgba(0, 255, 80, 0.15);
         }
         .card-title {
-          color: green;
+          color: #50C878;
           font-size: 1.35rem;
           margin-bottom: 10px;
         }
@@ -76,7 +76,7 @@ export default function AntivirusProtection() {
           line-height: 1.5;
         }
         .btn-dark-theme {
-          background: linear-gradient(90deg, green , green);
+          background: linear-gradient(90deg, #014D4E , #014D4E);
           color: #fff;
           border: none;
           padding: 10px 20px;
@@ -85,18 +85,18 @@ export default function AntivirusProtection() {
           text-decoration: none;
           font-weight: 600;
           font-size: 0.95rem;
-          box-shadow: 0 3px 10px green;
+          box-shadow: 0 3px 10px #014D4E;
         }
         .btn-dark-theme:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(0, 255, 80, 0.35);
+          box-shadow: 0 6px 16px rgba(0, 96, 76, 0.35);
           opacity: 0.95;
         }
       `}</style>
 
       {/* Title */}
       <motion.h1
-        className="text-center page-title mb-2"
+        className="text-center page-title mb-2 metalicgold"
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}

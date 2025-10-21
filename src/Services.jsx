@@ -18,8 +18,8 @@ export default function Services() {
   return (
     <div id="services" className="services-section text-center py-5">
       {/* Section Title */}
-      <h2 className="services-title fw-bold">OUR SERVICES</h2>
-      <p className="services-subtitle text-light">
+      <h2 className="services-title metalicgold fw-bold">OUR SERVICES</h2>
+      <p className="services-subtitle text-white">
         Comprehensive cybersecurity solutions to protect your business and data
       </p>
 
@@ -27,8 +27,8 @@ export default function Services() {
         {/* Row 1 */}
         <Row className="mt-5">
           <Col md={6} lg={4} className="mb-5">
-            <FaShieldAlt className="service-icon" />
-            <h4 className="service-heading text-white">
+            <FaShieldAlt className="service-icon teal" />
+            <h4 className="service-heading metalicgold">
               Vulnerability Assessment
             </h4>
             <p className="service-text text-light">
@@ -37,16 +37,16 @@ export default function Services() {
           </Col>
 
           <Col md={6} lg={4} className="mb-5">
-            <FaBug className="service-icon" />
-            <h4 className="service-heading text-white">Penetration Testing</h4>
+            <FaBug className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Penetration Testing</h4>
             <p className="service-text text-light">
               Simulate real-world cyberattacks to uncover vulnerabilities.
             </p>
           </Col>
 
           <Col md={6} lg={4} className="mb-5">
-            <FaChartLine className="service-icon" />
-            <h4 className="service-heading text-white">Security Monitoring</h4>
+            <FaChartLine className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Security Monitoring</h4>
             <p className="service-text text-light">
               24/7 monitoring to detect and prevent suspicious activities.
             </p>
@@ -56,24 +56,24 @@ export default function Services() {
         {/* Row 2 */}
         <Row>
           <Col md={6} lg={4} className="mb-5">
-            <FaExclamationTriangle className="service-icon" />
-            <h4 className="service-heading text-white">Incident Response</h4>
+            <FaExclamationTriangle className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Incident Response</h4>
             <p className="service-text text-light">
               Rapid response teams to contain and fix cyber incidents quickly.
             </p>
           </Col>
 
           <Col md={6} lg={4} className="mb-5">
-            <FaUserSecret className="service-icon" />
-            <h4 className="service-heading text-white">Threat Intelligence</h4>
+            <FaUserSecret className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Threat Intelligence</h4>
             <p className="service-text text-light">
               Stay ahead with real-time global threat data and insights.
             </p>
           </Col>
 
           <Col md={6} lg={4} className="mb-5">
-            <FaLock className="service-icon" />
-            <h4 className="service-heading text-white">Data Encryption</h4>
+            <FaLock className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Data Encryption</h4>
             <p className="service-text text-light">
               Secure sensitive data with strong encryption technologies.
             </p>
@@ -83,24 +83,24 @@ export default function Services() {
         {/* Row 3 */}
         <Row>
           <Col md={6} lg={4} className="mb-5">
-            <FaNetworkWired className="service-icon" />
-            <h4 className="service-heading text-white">Network Security</h4>
+            <FaNetworkWired className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Network Security</h4>
             <p className="service-text text-light">
               Protect your entire IT infrastructure from cyberattacks.
             </p>
           </Col>
 
           <Col md={6} lg={4} className="mb-5">
-            <FaCloud className="service-icon" />
-            <h4 className="service-heading text-white">Cloud Security</h4>
+            <FaCloud className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Cloud Security</h4>
             <p className="service-text text-light">
               Secure your cloud environments with advanced protections.
             </p>
           </Col>
 
           <Col md={6} lg={4} className="mb-5">
-            <FaKey className="service-icon" />
-            <h4 className="service-heading text-white">Identity Protection</h4>
+            <FaKey className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Identity Protection</h4>
             <p className="service-text text-light">
               Prevent unauthorized access with robust authentication solutions.
             </p>
@@ -110,16 +110,16 @@ export default function Services() {
         {/* Row 4 */}
         <Row>
           <Col md={12} lg={6} className="mb-5">
-            <FaDatabase className="service-icon" />
-            <h4 className="service-heading text-white">Database Security</h4>
+            <FaDatabase className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Database Security</h4>
             <p className="service-text text-light">
               Safeguard databases from breaches, leaks, and unauthorized access.
             </p>
           </Col>
 
           <Col md={12} lg={6} className="mb-5">
-            <FaShieldAlt className="service-icon" />
-            <h4 className="service-heading text-white">Compliance Audits</h4>
+            <FaShieldAlt className="service-icon teal" />
+            <h4 className="service-heading metalicgold">Compliance Audits</h4>
             <p className="service-text text-light">
               Ensure compliance with GDPR, ISO, HIPAA, and other standards.
             </p>

@@ -238,7 +238,7 @@
 .intro-line {
   font-size: 0.9rem;
   letter-spacing: 2px;
-  border-left: 3px solid green;
+  border-left: 3px solid ;
   padding-left: 10px;
   margin-bottom: 15px;
 }
@@ -323,4 +323,23 @@ a{
   .navbar-nav .nav-item {
     margin: 10px 0;
   }
+}
+
+.emarld{
+  color: #50C878;
+}
+.emarldbtn{
+  background:#50C878;
+}
+.teal{
+  color: #014D4E;
+}
+.tealbtn{
+  background: #014D4E;
+}
+.metalicgold{
+  color: #D4AF37;
+}
+.metalicgoldbtn{
+  background: #D4AF37;
 }

@@ -61,7 +61,7 @@ const styles = {
   },
   heading: {
     fontSize: "36px",
-    color: "green",
+    color: "#D4AF37",
     marginBottom: "10px",
   },
   subheading: {
@@ -78,15 +78,15 @@ const styles = {
   },
   card: {
     background: "#1a1a1a",
-    border: "2px solid green",
+    border: "2px solid #014D4E",
     borderRadius: "12px",
     padding: "20px",
     width: "300px",
-    boxShadow: "0 0 20px green",
+    boxShadow: "0 0 20px #014D4E",
     transition: "transform 0.3s",
   },
   cardHeading: {
-    color: "green",
+    color: "#50C878",
     marginBottom: "10px",
     fontSize: "22px",
   },
@@ -102,10 +102,10 @@ const styles = {
     width: "90%",
     maxWidth: "800px",
     borderRadius: "15px",
-    boxShadow: "0 0 20px green",
+    boxShadow: "0 0 20px #014D4E",
   },
   footerText: {
     fontSize: "18px",
-    color: "green",
+    color: "#50C878",
   },
 };
